@@ -1,0 +1,44 @@
+# Environment & virtualenv
+.env
+.venv/
+
+# Notes
+notes.txt
+data
+models
+configs
+
+# Pytest cache
+.pytest_cache/
+
+# Python bytecode & caches (ensure nested dirs ignored)
+__pycache__/
+**/__pycache__/
+*.py[cod]
+*$py.class
+*.pyo
+*.pyd
+*.so
+
+# Build / packaging (not currently used but future-proof)
+build/
+dist/
+*.egg-info/
+
+# Data & generated artifacts
+data/
+reports/
+models/finetuned/
+
+# Jupyter / notebooks
+.ipynb_checkpoints/
+
+# VSCode / editor
+.vscode/
+
+# Hugging Face caches (optional; comment if you want to keep)
+/.cache/huggingface/
+hf_cache/
+
+# Logs
+*.log

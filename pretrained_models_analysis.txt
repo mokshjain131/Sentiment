@@ -1,0 +1,184 @@
+================================================================================
+ PRE-TRAINED MODELS ANALYSIS REPORT
+ Baseline Performance Before Fine-tuning
+================================================================================
+
+Generated: 2025-10-20 04:56:37
+Test Dataset: FinancialPhraseBank (balanced sample)
+Number of Test Sentences: 48
+Results CSV: pretrained_comparison.csv
+
+================================================================================
+OVERALL ACCURACY COMPARISON
+================================================================================
+
+FinBERT:     77.1% (37/48 correct)
+DistilBERT:  54.2% (26/48 correct)
+ELECTRA:      0.0% (0/48 correct)
+
+🏆 WINNER: FinBERT with 77.1% accuracy
+
+================================================================================
+PER-CLASS ACCURACY BREAKDOWN
+================================================================================
+
+POSITIVE (16 samples):
+   FinBERT:     68.8%
+   DistilBERT:  62.5%
+   ELECTRA:      0.0%
+
+NEGATIVE (16 samples):
+   FinBERT:     93.8%
+   DistilBERT: 100.0%
+   ELECTRA:      0.0%
+
+NEUTRAL (16 samples):
+   FinBERT:     68.8%
+   DistilBERT:   0.0%
+   ELECTRA:      0.0%
+
+================================================================================
+CONFUSION MATRIX - PREDICTION BREAKDOWN
+================================================================================
+
+FINBERT:
+   True positive → positive:11, neutral:4, negative:1
+   True negative → negative:15, positive:1
+   True neutral  → neutral:11, negative:5
+
+DISTILBERT:
+   True positive → positive:10, negative:6
+   True negative → negative:16
+   True neutral  → negative:10, positive:6
+
+ELECTRA:
+   True positive → joy:11, sadness:3, fear:1, anger:1
+   True negative → sadness:7, joy:6, anger:2, fear:1
+   True neutral  → joy:12, sadness:3, anger:1
+
+================================================================================
+MODEL CHARACTERISTICS
+================================================================================
+
+1. FinBERT (ProsusAI/finbert)
+   - Pre-trained on financial text (already domain-specific)
+   - Has 3 sentiment labels: positive, negative, neutral
+   - Expected to perform best at baseline
+   - 110M parameters
+
+2. DistilBERT (distilbert-base-uncased-finetuned-sst-2-english)
+   - Pre-trained on movie reviews (SST-2 dataset)
+   - Only 2 labels: POSITIVE, NEGATIVE (no neutral)
+   - 66M parameters (40% smaller than BERT)
+   - 60% faster inference than BERT
+   - Expected to struggle with neutral and financial context
+
+3. ELECTRA (google/electra-base-discriminator)
+   - Pre-trained on emotion detection task
+   - Not specifically trained for sentiment
+   - 110M parameters
+   - Sample-efficient training (learns faster)
+   - Expected to perform poorly at baseline
+
+================================================================================
+KEY INSIGHTS & EXPECTATIONS
+================================================================================
+
+BEFORE Fine-tuning (Current Results):
+   • FinBERT should dominate (already financial sentiment trained)
+   • DistilBERT may have reasonable accuracy on positive/negative
+   • DistilBERT will struggle with neutral (no neutral label)
+   • ELECTRA will be inconsistent (emotion ≠ sentiment)
+
+AFTER Fine-tuning on FinancialPhraseBank:
+   • All models will learn the same 3 labels
+   • All will understand financial terminology
+   • Architecture differences will determine performance:
+     - FinBERT: May improve 3-5% (already optimized)
+     - DistilBERT: Should improve 10-15% (learns neutral + finance)
+     - ELECTRA: Should improve 20-30% (learns task from scratch)
+
+Expected Post-Training Accuracy:
+   • FinBERT: 80-83% (current baseline + refinement)
+   • DistilBERT: 79-81% (trade-off: speed vs accuracy)
+   • ELECTRA: 82-84% (best architecture for this task)
+
+================================================================================
+SAMPLE PREDICTIONS (First 10 sentences)
+================================================================================
+
+Sentence 1: $INTC finally some nice downside move... looking for the 31 handle to break
+   True Label:      negative
+   FinBERT:         positive ✗
+   DistilBERT:      negative ✓
+   ELECTRA:         joy ✗
+
+Sentence 2: Operating profit fell to EUR 20.3 mn from EUR 74.2 mn in the second quarter of 2008 .
+   True Label:      negative
+   FinBERT:         negative ✓
+   DistilBERT:      negative ✓
+   ELECTRA:         joy ✗
+
+Sentence 3: ADP News - May 29 , 2009 - Bank of America BofA downgraded today its ratings on Swedish-Finnish pape...
+   True Label:      negative
+   FinBERT:         negative ✓
+   DistilBERT:      negative ✓
+   ELECTRA:         anger ✗
+
+Sentence 4: The new office , located in Shenzhen , will strengthen Vaisala 's already 10-year old presence in Ch...
+   True Label:      positive
+   FinBERT:         positive ✓
+   DistilBERT:      positive ✓
+   ELECTRA:         joy ✗
+
+Sentence 5: Vaisala 's net profit for the third quarter of 2007 dropped to 3.0 mln euro ( $ 4.3 mln ) from 6.8 m...
+   True Label:      negative
+   FinBERT:         negative ✓
+   DistilBERT:      negative ✓
+   ELECTRA:         sadness ✗
+
+Sentence 6: $SPPI..building RS. Sweet. I want this to break a new 52week. The earnings growth justifies way high...
+   True Label:      positive
+   FinBERT:         positive ✓
+   DistilBERT:      positive ✓
+   ELECTRA:         joy ✗
+
+Sentence 7: $DISH weakness continues again. 49.43 area resistance after last week
+   True Label:      negative
+   FinBERT:         negative ✓
+   DistilBERT:      negative ✓
+   ELECTRA:         sadness ✗
+
+Sentence 8: DnB Nord of Norway is the `` most likely Nordic buyer '' for Citadele , while Nordea would be a `` g...
+   True Label:      neutral
+   FinBERT:         neutral ✓
+   DistilBERT:      negative ✗
+   ELECTRA:         joy ✗
+
+Sentence 9: `` After the share purchase is completed , financing will also be provided to expand Latvia 's broad...
+   True Label:      positive
+   FinBERT:         positive ✓
+   DistilBERT:      positive ✓
+   ELECTRA:         joy ✗
+
+Sentence 10: Irish housebuilder Cairn Homes plans London listing
+   True Label:      positive
+   FinBERT:         neutral ✗
+   DistilBERT:      positive ✓
+   ELECTRA:         joy ✗
+
+================================================================================
+RECOMMENDED NEXT STEPS
+================================================================================
+
+1. Review this analysis and the CSV file (pretrained_comparison.csv)
+2. Note FinBERT's baseline accuracy as the target to beat
+3. Train DistilBERT using: colab_training_distilbert.py
+4. Train ELECTRA using: colab_training_electra.py
+5. Create test_finetuned_models.py to evaluate trained models
+6. Compare before/after improvements for each model
+7. Select final model based on accuracy/speed trade-off
+
+================================================================================
+END OF REPORT
+================================================================================

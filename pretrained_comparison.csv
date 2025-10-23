@@ -1,0 +1,49 @@
+sentence,true_label,finbert_prediction,finbert_confidence,finbert_correct,distilbert_prediction,distilbert_confidence,distilbert_correct,electra_prediction,electra_confidence,electra_correct,finbert_prob_positive,finbert_prob_negative,finbert_prob_neutral
+$INTC finally some nice downside move... looking for the 31 handle to break,negative,positive,0.6439,False,negative,0.9316,True,joy,0.9132,False,0.6439,0.0277,0.3284
+Operating profit fell to EUR 20.3 mn from EUR 74.2 mn in the second quarter of 2008 .,negative,negative,0.9766,True,negative,0.9983,True,joy,0.4281,False,0.0073,0.9766,0.0161
+"ADP News - May 29 , 2009 - Bank of America BofA downgraded today its ratings on Swedish-Finnish paper maker Stora Enso Oyj HEL : STERV and on Finnish sector player UPM-Kymmene Oyj HEL : UPM1V to `` underperf",negative,negative,0.9388,True,negative,0.999,True,anger,0.3435,False,0.0117,0.9388,0.0495
+"The new office , located in Shenzhen , will strengthen Vaisala 's already 10-year old presence in China .",positive,positive,0.9353,True,positive,0.9992,True,joy,0.8976,False,0.9353,0.0086,0.0561
+Vaisala 's net profit for the third quarter of 2007 dropped to 3.0 mln euro ( $ 4.3 mln ) from 6.8 mln euro ( $ 9.8 mln ) for the same period of 2006 .,negative,negative,0.9764,True,negative,0.996,True,sadness,0.8246,False,0.0069,0.9764,0.0167
+$SPPI..building RS. Sweet. I want this to break a new 52week. The earnings growth justifies way higher,positive,positive,0.8605,True,positive,0.9941,True,joy,0.5722,False,0.8605,0.0216,0.118
+$DISH weakness continues again. 49.43 area resistance after last week,negative,negative,0.9126,True,negative,0.9949,True,sadness,0.7364,False,0.053,0.9126,0.0344
+"DnB Nord of Norway is the `` most likely Nordic buyer '' for Citadele , while Nordea would be a `` good strategic fit '' , according to the document published by Pietiek .",neutral,neutral,0.7719,True,negative,0.7712,False,joy,0.9372,False,0.2204,0.0077,0.7719
+"`` After the share purchase is completed , financing will also be provided to expand Latvia 's broadband infrastructure and to develop new areas of business , including acquisitions of other companies . ''",positive,positive,0.7617,True,positive,0.9972,True,joy,0.9281,False,0.7617,0.0075,0.2308
+Irish housebuilder Cairn Homes plans London listing,positive,neutral,0.9328,False,positive,0.985,True,joy,0.5399,False,0.048,0.0192,0.9328
+The Insolvency Act regulates the amount of debt that borrowers are permitted to write off .,neutral,neutral,0.7399,True,negative,0.7441,False,joy,0.3191,False,0.0182,0.2419,0.7399
+Ruukki 's order book at the end of 2010 was 30 % up year-on-year and 10 % up quarter-on-quarter .,positive,positive,0.9548,True,negative,0.8968,False,joy,0.4837,False,0.9548,0.0239,0.0213
+GenVec is a biopharmaceutical company developing novel therapeutic drugs and vaccines .,neutral,neutral,0.8463,True,positive,0.9789,False,joy,0.9466,False,0.1452,0.0085,0.8463
+"JP Morgan expects that Scala will lower Nobel Biocare 's growth forecast for 2007 from the current guidance of 23-25 pct , as well as the operating margin target from the current 34-35 pct .",negative,negative,0.9648,True,negative,0.9995,True,joy,0.9248,False,0.0089,0.9648,0.0263
+$AMZN new HOD with conviction keeping $570 on watch for Resistance.,positive,positive,0.7771,True,negative,0.9439,False,joy,0.3864,False,0.7771,0.0961,0.1268
+The Finnish company previously said its operating result will be lower than the break-even posted a year earlier .,neutral,negative,0.9746,False,negative,0.9996,False,sadness,0.6918,False,0.0087,0.9746,0.0167
+"RT @Cash_Cow $TLT still has a rising RSI & MACD, all this bond buying is signaling some bad moves for the market. $SPY $UUP",negative,negative,0.9579,True,negative,0.9995,True,sadness,0.917,False,0.016,0.9579,0.0261
+"Aspocomp said it will spin off its Chinese and Indian units , and some equipment from its Salo plant in Finland , into a newly-formed unit , most of which it will then sell on to Hong Kong-listed Meadville .",neutral,neutral,0.9506,True,negative,0.9433,False,joy,0.9175,False,0.0284,0.021,0.9506
+Finnlines estimated in its annual general meeting that 2008 will be financially a tough year due to large investments .,negative,negative,0.969,True,negative,0.9939,True,joy,0.9476,False,0.0119,0.969,0.0191
+"Finnish plumbing and heating systems supplier Uponor 's net sales from continuing operations decreased by 9.4 % in 2008 to EUR 949.2 mn from EUR 1,047.4 mn in 2007 .",negative,negative,0.9755,True,negative,0.998,True,sadness,0.5045,False,0.0081,0.9755,0.0164
+Asian traffic declined by 3.4 per cent .,neutral,negative,0.9744,False,negative,0.9963,False,anger,0.5077,False,0.009,0.9744,0.0166
+The fixed acquisition price amounts to NOK 70 ( approximately EUR 8.7 ) million and additional price NOK 15 ( EUR 1.8 ) million at maximum .,neutral,neutral,0.9258,True,negative,0.9797,False,joy,0.7592,False,0.0616,0.0126,0.9258
+"Net cash from operating activities was a negative EUR 0.3 mn , compared to EUR 30.9 mn in 2009 .",neutral,negative,0.9701,False,negative,0.9985,False,sadness,0.5213,False,0.0207,0.9701,0.0092
+"It generated an operating loss of EUR 96.3 mn , down from a profit of EUR 43.9 mn .",negative,negative,0.9764,True,negative,0.999,True,sadness,0.8649,False,0.008,0.9764,0.0156
+18 March 2010 A leakage in the gypsum pond was detected today at the Talvivaara mine .,negative,negative,0.9232,True,negative,0.9961,True,fear,0.5461,False,0.0134,0.9232,0.0633
+Pretax profit decreased by 37 % to EUR 193.1 mn from EUR 305.6 mn .,negative,negative,0.975,True,negative,0.9959,True,sadness,0.532,False,0.01,0.975,0.015
+Finnish Bank of +àland +àlandsbanken has issued a profit warning .,neutral,negative,0.9699,False,negative,0.9875,False,joy,0.9327,False,0.0079,0.9699,0.0222
+The Swedish player became majority owner of UCell in mid-2007 .,neutral,neutral,0.9482,True,positive,0.8275,False,joy,0.8746,False,0.0335,0.0182,0.9482
+"Sales VAT inclusive expanded by 19 percent , to 351 million euros .",positive,positive,0.9583,True,positive,0.9755,True,joy,0.9273,False,0.9583,0.0144,0.0274
+Kingfisher takeover of Mr Bricolage could hit a brick wall,negative,negative,0.7929,True,negative,0.9953,True,anger,0.4398,False,0.021,0.7929,0.186
+"`` Adjustment to the fall in price level , in contrast , has been less effective .",negative,negative,0.9415,True,negative,0.9992,True,joy,0.95,False,0.0232,0.9415,0.0353
+Suomen Paikallissanomat Oy is part of Alma Media Group and it currently publishes 15 local newspapers across Finland .,neutral,neutral,0.9439,True,positive,0.9927,False,joy,0.8987,False,0.0362,0.0199,0.9439
+London Stock Exchange Shareholders Approve Merger With Deutsche BÃ¶rse,positive,neutral,0.8568,False,positive,0.7743,True,joy,0.8085,False,0.1308,0.0124,0.8568
+"The most important export markets are Norway , Germany , Russia and France .",neutral,neutral,0.8914,True,positive,0.9953,False,joy,0.9422,False,0.0972,0.0113,0.8914
+"The Company operates through four principal divisions : Consumer Packaging ; Office Papers ; Speciality Papers , as well as Market Pulp and Energy .",neutral,neutral,0.9471,True,positive,0.9137,False,joy,0.872,False,0.0229,0.03,0.9471
+"According to CEO Matti Karppinen , Frozen Foods posted a good result in 2010 , as it did in 2009 .",positive,positive,0.9561,True,positive,0.9995,True,joy,0.9485,False,0.9561,0.0209,0.023
+"Kiosk and cinema operations have suffered , in particular .",negative,negative,0.9711,True,negative,0.9997,True,sadness,0.5631,False,0.0095,0.9711,0.0193
+L&T 's net profit for the whole 2010 dropped to EUR 36 million from EUR 45 million for 2009 .,neutral,negative,0.9763,False,negative,0.9924,False,sadness,0.6321,False,0.0072,0.9763,0.0165
+Growth is expected to continue in 2008 .,positive,positive,0.9331,True,positive,0.9991,True,joy,0.885,False,0.9331,0.0125,0.0544
+"Westpac Banking Corp - Is to issue a benchmark , 3 year FRN deal in Euros .",neutral,neutral,0.7133,True,positive,0.9069,False,joy,0.8742,False,0.2776,0.0091,0.7133
+"Both operating profit and turnover for the six-month period increased , respectively from EUR0 .1 m and EUR29 .0 m , as compared to the corresponding period a year ago .",positive,positive,0.9573,True,positive,0.8793,True,sadness,0.4372,False,0.9573,0.0227,0.02
+Primark racks up a happy Christmas after strong sales,positive,positive,0.8915,True,positive,0.9998,True,joy,0.9498,False,0.8915,0.0437,0.0648
+@technik I still have a smaller $GILD pos. Being very tender with cash due to volatility. So reluctant to keep many big positions.,positive,negative,0.9058,False,negative,0.9984,False,fear,0.5651,False,0.0152,0.9058,0.079
+The costs of the new ropax vessels are 30 % lower than those of the present ones .,positive,positive,0.5816,True,negative,0.9984,False,sadness,0.5955,False,0.5816,0.0144,0.4039
+Hard to find new buyers of $TSLA at 250.  Shorts continue to pile in.,negative,negative,0.9308,True,negative,0.9996,True,joy,0.5169,False,0.0193,0.9308,0.0499
+$FB Big Money Is Pouring Into Facebook From All Directions;http://stks.co/sOwG,positive,neutral,0.8568,False,negative,0.9966,False,anger,0.3037,False,0.1281,0.015,0.8568
+Sainsbury sells unit to LloydsPharmacy,positive,neutral,0.9322,False,negative,0.9847,False,sadness,0.35,False,0.0515,0.0163,0.9322
+"According to Finnish Scanfil 's founder and chairman of the board , Jorma J. Takanen , the company has to look for growth abroad .",neutral,neutral,0.8765,True,negative,0.8673,False,joy,0.8521,False,0.0687,0.0547,0.8765
