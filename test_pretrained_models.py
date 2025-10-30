@@ -16,6 +16,7 @@ import torch
 from pathlib import Path
 import random
 from datetime import datetime
+from sklearn.metrics import classification_report, accuracy_score
 import warnings
 warnings.filterwarnings('ignore')
 
@@ -29,19 +30,30 @@ def load_test_data(num_samples=50):
     
     test_samples = []
     for label in ['positive', 'negative', 'neutral']:
-        class_data = df[df['label'] == label].sample(n=samples_per_class, random_state=42)
-        for _, row in class_data.iterrows():
+        class_data = df[df['label'] == label]
+        if len(class_data) < samples_per_class:
+            print(f"⚠️  Warning: Only {len(class_data)} samples available for {label}, sampling {len(class_data)}")
+            sampled = class_data.sample(n=len(class_data), random_state=42)
+        else:
+            sampled = class_data.sample(n=samples_per_class, random_state=42)
+        for _, row in sampled.iterrows():
             test_samples.append((row['text'], row['label']))
     
     # Shuffle to mix labels
     random.seed(42)
     random.shuffle(test_samples)
     
+    print(f"✅ Loaded {len(test_samples)} test sentences:")
+    for label in ['positive', 'negative', 'neutral']:
+        count = sum(1 for _, lbl in test_samples if lbl == label)
+        print(f"   {label}: {count} samples")
+    print()
+    
     return test_samples
 
 # Load test sentences from dataset
 print("Loading test data from FinancialPhraseBank dataset...")
-TEST_SENTENCES = load_test_data(num_samples=50)
+TEST_SENTENCES = load_test_data(num_samples=200)
 print(f"✅ Loaded {len(TEST_SENTENCES)} test sentences (balanced across positive/negative/neutral)")
 print()
 
@@ -132,7 +144,16 @@ def predict_electra(text, pipeline):
         result = pipeline(text, truncation=True, max_length=512)[0]
         label = result['label'].lower()
         confidence = result['score']
-        return label, confidence, None
+        # Map ELECTRA emotion labels to sentiment
+        if label == 'joy':
+            mapped_label = 'positive'
+        elif label == 'sadness':
+            mapped_label = 'negative'
+        elif label in ['anger', 'fear', 'surprise', 'disgust']:  # treat as neutral for this task
+            mapped_label = 'neutral'
+        else:
+            mapped_label = label  # fallback
+        return mapped_label, confidence, label  # also return original label for analysis
     except Exception as e:
         return "ERROR", 0.0, None
 
@@ -167,59 +188,77 @@ def main():
     results = []
     
     for i, (sentence, true_label) in enumerate(TEST_SENTENCES, 1):
-        print(f"[{i}/{len(TEST_SENTENCES)}] Testing: '{sentence[:55]}...'")
-        print(f"   True Label: {true_label.upper()}")
-        
-        # FinBERT prediction
-        finbert_label, finbert_conf, finbert_probs = predict_finbert(
-            sentence, finbert_tokenizer, finbert_model, finbert_labels
-        )
-        
-        # DistilBERT prediction
-        distilbert_label, distilbert_conf, _ = predict_distilbert(
-            sentence, distilbert_pipeline
-        )
-        
-        # ELECTRA prediction
-        electra_label, electra_conf, _ = predict_electra(
-            sentence, electra_pipeline
-        )
-        
-        # Store results
-        result = {
-            'sentence': sentence,
-            'true_label': true_label,
-            'finbert_prediction': finbert_label,
-            'finbert_confidence': round(finbert_conf, 4),
-            'finbert_correct': finbert_label == true_label,
-            'distilbert_prediction': distilbert_label,
-            'distilbert_confidence': round(distilbert_conf, 4),
-            'distilbert_correct': distilbert_label == true_label,
-            'electra_prediction': electra_label,
-            'electra_confidence': round(electra_conf, 4),
-            'electra_correct': electra_label == true_label
-        }
-        
-        # Add probability details for FinBERT (has 3 classes)
-        if finbert_probs:
-            result['finbert_prob_positive'] = round(finbert_probs[0], 4)
-            result['finbert_prob_negative'] = round(finbert_probs[1], 4)
-            result['finbert_prob_neutral'] = round(finbert_probs[2], 4)
-        
-        results.append(result)
-        
-        # Display predictions
-        finbert_mark = "✓" if finbert_label == true_label else "✗"
-        distilbert_mark = "✓" if distilbert_label == true_label else "✗"
-        electra_mark = "✓" if electra_label == true_label else "✗"
-        
-        print(f"   FinBERT:    {finbert_label:8s} ({finbert_conf*100:.1f}%) {finbert_mark}")
-        print(f"   DistilBERT: {distilbert_label:8s} ({distilbert_conf*100:.1f}%) {distilbert_mark}")
-        print(f"   ELECTRA:    {electra_label:8s} ({electra_conf*100:.1f}%) {electra_mark}")
-        print()
+        try:
+            print(f"[{i}/{len(TEST_SENTENCES)}] Testing: '{sentence[:55]}...'")
+            print(f"   True Label: {true_label.upper()}")
+            # FinBERT prediction
+            finbert_label, finbert_conf, finbert_probs = predict_finbert(
+                sentence, finbert_tokenizer, finbert_model, finbert_labels
+            )
+            # DistilBERT prediction
+            distilbert_label, distilbert_conf, _ = predict_distilbert(
+                sentence, distilbert_pipeline
+            )
+            # ELECTRA prediction (returns mapped, conf, original)
+            electra_label, electra_conf, electra_orig_label = predict_electra(
+                sentence, electra_pipeline
+            )
+            # Store results
+            result = {
+                'sentence': sentence,
+                'true_label': true_label,
+                'finbert_prediction': finbert_label,
+                'finbert_confidence': round(finbert_conf, 4),
+                'finbert_correct': finbert_label == true_label,
+                'distilbert_prediction': distilbert_label,
+                'distilbert_confidence': round(distilbert_conf, 4),
+                'distilbert_correct': distilbert_label == true_label,
+                'electra_prediction': electra_label,
+                'electra_confidence': round(electra_conf, 4),
+                'electra_correct': electra_label == true_label,
+                'electra_raw_label': electra_orig_label
+            }
+            # Add probability details for FinBERT (has 3 classes)
+            if finbert_probs:
+                result['finbert_prob_positive'] = round(finbert_probs[0], 4)
+                result['finbert_prob_negative'] = round(finbert_probs[1], 4)
+                result['finbert_prob_neutral'] = round(finbert_probs[2], 4)
+            results.append(result)
+            # Display predictions
+            finbert_mark = "✓" if finbert_label == true_label else "✗"
+            distilbert_mark = "✓" if distilbert_label == true_label else "✗"
+            electra_mark = "✓" if electra_label == true_label else "✗"
+            print(f"   FinBERT:    {finbert_label:8s} ({finbert_conf*100:.1f}%) {finbert_mark}")
+            print(f"   DistilBERT: {distilbert_label:8s} ({distilbert_conf*100:.1f}%) {distilbert_mark}")
+            print(f"   ELECTRA:    {electra_label:8s} ({electra_conf*100:.1f}%) {electra_mark} (raw: {electra_orig_label})")
+            print()
+        except Exception as e:
+            print(f"❌ Error processing sentence {i}: {e}")
+            print("   Skipping this sentence and continuing...")
+            print()
+            continue
     
-    # Create DataFrame
+    # Create DataFrame (always, even if results is empty)
     df = pd.DataFrame(results)
+    
+    if len(df) == 0:
+        print("❌ No results to analyze. Check for errors above.")
+        return
+    
+    print(f"✅ Processed {len(df)} sentences successfully (out of {len(TEST_SENTENCES)})")
+    print()
+    
+    # --- METRICS: precision, recall, f1, accuracy ---
+    y_true = df['true_label']
+    y_pred_finbert = df['finbert_prediction']
+    y_pred_distilbert = df['distilbert_prediction']
+    y_pred_electra = df['electra_prediction']
+
+    print("\nMETRICS (Precision, Recall, F1, Accuracy):\n")
+    for model, y_pred in zip(['FinBERT', 'DistilBERT', 'ELECTRA'], [y_pred_finbert, y_pred_distilbert, y_pred_electra]):
+        print(f"{model}:")
+        print(classification_report(y_true, y_pred, digits=3, zero_division=0))
+        print(f"Accuracy: {accuracy_score(y_true, y_pred):.3f}\n")
     
     # Save to CSV
     output_file = "pretrained_comparison.csv"
@@ -380,11 +419,7 @@ def main():
     # ============================================
     # SAVE DETAILED ANALYSIS REPORT
     # ============================================
-    
-    report_dir = Path("reports")
-    report_dir.mkdir(exist_ok=True)
-    report_path = report_dir / "pretrained_models_analysis.txt"
-    
+    report_path = "pretrained_models_analysis.txt"
     with open(report_path, 'w', encoding='utf-8') as f:
         f.write("="*80 + "\n")
         f.write(" PRE-TRAINED MODELS ANALYSIS REPORT\n")
@@ -394,18 +429,16 @@ def main():
         f.write(f"Test Dataset: FinancialPhraseBank (balanced sample)\n")
         f.write(f"Number of Test Sentences: {len(df)}\n")
         f.write(f"Results CSV: {output_file}\n\n")
-        
-        # Overall Accuracy
+        # Metrics
         f.write("="*80 + "\n")
-        f.write("OVERALL ACCURACY COMPARISON\n")
+        f.write("METRICS (Precision, Recall, F1, Accuracy)\n")
         f.write("="*80 + "\n\n")
-        f.write(f"FinBERT:    {finbert_acc:5.1f}% ({df['finbert_correct'].sum()}/{len(df)} correct)\n")
-        f.write(f"DistilBERT: {distilbert_acc:5.1f}% ({df['distilbert_correct'].sum()}/{len(df)} correct)\n")
-        f.write(f"ELECTRA:    {electra_acc:5.1f}% ({df['electra_correct'].sum()}/{len(df)} correct)\n\n")
-        
+        for model, y_pred in zip(['FinBERT', 'DistilBERT', 'ELECTRA'], [y_pred_finbert, y_pred_distilbert, y_pred_electra]):
+            f.write(f"{model}:\n")
+            f.write(classification_report(y_true, y_pred, digits=3, zero_division=0))
+            f.write(f"Accuracy: {accuracy_score(y_true, y_pred):.3f}\n\n")
         # Winner
         f.write(f"🏆 WINNER: {winner} with {accuracies[winner]:.1f}% accuracy\n\n")
-        
         # Per-class Accuracy
         f.write("="*80 + "\n")
         f.write("PER-CLASS ACCURACY BREAKDOWN\n")
@@ -416,12 +449,10 @@ def main():
                 finbert_class_acc = class_df['finbert_correct'].sum() / len(class_df) * 100
                 distilbert_class_acc = class_df['distilbert_correct'].sum() / len(class_df) * 100
                 electra_class_acc = class_df['electra_correct'].sum() / len(class_df) * 100
-                
                 f.write(f"{label.upper()} ({len(class_df)} samples):\n")
                 f.write(f"   FinBERT:    {finbert_class_acc:5.1f}%\n")
                 f.write(f"   DistilBERT: {distilbert_class_acc:5.1f}%\n")
                 f.write(f"   ELECTRA:    {electra_class_acc:5.1f}%\n\n")
-        
         # Confusion Matrix
         f.write("="*80 + "\n")
         f.write("CONFUSION MATRIX - PREDICTION BREAKDOWN\n")

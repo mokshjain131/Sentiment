@@ -1,3 +1,16 @@
+**Financial Sentiment Analysis Pipeline**  
+Production-ready, class-weighted FinBERT-based sentiment analysis for financial news.  
+- **81.8% accuracy** on FinancialPhraseBank  
+- Fetch, analyze, and report sentiment from real-time news  
+- Includes web UI, CLI, and full training scripts  
+- Easy setup:
+  1. `pip install -r requirements.txt`
+  2. `python download_financialphrasebank.py`
+  3. `python app.py` for UI or use CLI tools
+  4. `python test_pretrained_models.py` to compare base models
+
+---
+
 # Financial Sentiment Analysis Pipeline
 
 Production-ready sentiment analysis for financial news with **81.8% accuracy**. Automated pipeline for fetching, analyzing, and reporting sentiment from financial news articles.
