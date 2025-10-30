@@ -1,15 +1,18 @@
 """
-Download FinancialPhraseBank from Hugging Face and convert to your format.
+Download FinancialPhraseBank from Hugging Face and convert to CSV format.
 
 Usage:
-    python download_financialphrasebank.py --format csv
-    python download_financialphrasebank.py --format parquet
+    python download_financialphrasebank.py
 """
 import pandas as pd
 import argparse
 from pathlib import Path
 
-def download_and_convert(output_format: str = "parquet"):
+def download_and_convert(output_format: str = "csv"):
+    """
+    Downloads FinancialPhraseBank and converts to CSV format.
+    Uses the mltrev23/financial-sentiment-analysis dataset from Hugging Face.
+    """
     """
     Downloads FinancialPhraseBank and converts to your project's format.
     Uses the mltrev23/financial-sentiment-analysis dataset from Hugging Face.
@@ -76,12 +79,8 @@ def download_and_convert(output_format: str = "parquet"):
     output_dir = Path("data/datasets")
     output_dir.mkdir(parents=True, exist_ok=True)
     
-    if output_format.lower() == "csv":
-        output_path = output_dir / "financialphrasebank.csv"
-        df.to_csv(output_path, index=False)
-    else:
-        output_path = output_dir / "financialphrasebank.parquet"
-        df.to_parquet(output_path, index=False)
+    output_path = output_dir / "financialphrasebank.csv"
+    df.to_csv(output_path, index=False)
     
     print(f"\n✅ Saved to: {output_path}")
     print(f"\n📊 Dataset Statistics:")
@@ -96,8 +95,6 @@ def download_and_convert(output_format: str = "parquet"):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Download FinancialPhraseBank dataset")
-    parser.add_argument("--format", choices=["csv", "parquet"], default="parquet", 
-                       help="Output format (default: parquet)")
     args = parser.parse_args()
     
-    download_and_convert(args.format)
+    download_and_convert()
