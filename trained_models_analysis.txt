@@ -1,0 +1,202 @@
+================================================================================
+ TRAINED MODELS ANALYSIS REPORT
+ Performance After Fine-tuning on FinancialPhraseBank
+================================================================================
+
+Generated: 2025-10-30 22:43:51
+Test Dataset: FinancialPhraseBank (balanced sample)
+Number of Test Sentences: 198
+Results CSV: trained_models_comparison.csv
+
+================================================================================
+METRICS (Precision, Recall, F1, Accuracy)
+================================================================================
+
+FinBERT:
+              precision    recall  f1-score   support
+
+    negative      0.812     0.985     0.890        66
+     neutral      0.909     0.758     0.826        66
+    positive      0.952     0.909     0.930        66
+
+    accuracy                          0.884       198
+   macro avg      0.891     0.884     0.882       198
+weighted avg      0.891     0.884     0.882       198
+Accuracy: 0.884
+
+DistilBERT:
+              precision    recall  f1-score   support
+
+    negative      0.853     0.970     0.908        66
+     neutral      0.879     0.773     0.823        66
+    positive      0.892     0.879     0.885        66
+
+    accuracy                          0.874       198
+   macro avg      0.875     0.874     0.872       198
+weighted avg      0.875     0.874     0.872       198
+Accuracy: 0.874
+
+ELECTRA:
+              precision    recall  f1-score   support
+
+    negative      0.688     0.667     0.677        66
+     neutral      0.585     0.833     0.688        66
+    positive      0.825     0.500     0.623        66
+
+    accuracy                          0.667       198
+   macro avg      0.699     0.667     0.662       198
+weighted avg      0.699     0.667     0.662       198
+Accuracy: 0.667
+
+🏆 WINNER: FinBERT with 88.4% accuracy
+
+================================================================================
+PER-CLASS ACCURACY BREAKDOWN
+================================================================================
+
+POSITIVE (66 samples):
+   FinBERT:     90.9%
+   DistilBERT:  87.9%
+   ELECTRA:     50.0%
+
+NEGATIVE (66 samples):
+   FinBERT:     98.5%
+   DistilBERT:  97.0%
+   ELECTRA:     66.7%
+
+NEUTRAL (66 samples):
+   FinBERT:     75.8%
+   DistilBERT:  77.3%
+   ELECTRA:     83.3%
+
+================================================================================
+CONFUSION MATRIX - PREDICTION BREAKDOWN
+================================================================================
+
+FINBERT:
+   True positive → positive:60, neutral:4, negative:2
+   True negative → negative:65, neutral:1
+   True neutral  → neutral:50, negative:13, positive:3
+
+DISTILBERT:
+   True positive → positive:58, neutral:7, negative:1
+   True negative → negative:64, positive:2
+   True neutral  → neutral:51, negative:10, positive:5
+
+ELECTRA:
+   True positive → positive:33, neutral:22, negative:11
+   True negative → negative:44, neutral:17, positive:5
+   True neutral  → neutral:55, negative:9, positive:2
+
+================================================================================
+MODEL CHARACTERISTICS
+================================================================================
+
+1. FinBERT (Fine-tuned)
+   - Pre-trained on financial text, fine-tuned on FinancialPhraseBank
+   - 110M parameters
+   - Domain specialist for financial sentiment
+
+2. DistilBERT (Fine-tuned)
+   - Pre-trained on general text, fine-tuned on FinancialPhraseBank
+   - 66M parameters (40% smaller than BERT)
+   - 60% faster inference
+   - Learned neutral class and financial terminology
+
+3. ELECTRA (Fine-tuned)
+   - Pre-trained on emotion detection, fine-tuned on FinancialPhraseBank
+   - 110M parameters
+   - Sample-efficient training
+   - Learned sentiment task from scratch
+
+================================================================================
+KEY INSIGHTS & COMPARISON TO PRE-TRAINED
+================================================================================
+
+BEFORE vs AFTER Fine-tuning:
+   • Pre-trained: FinBERT best (already financial), others inconsistent
+   • Fine-tuned: All models should show major improvements
+   • Expected gains: 20-40% accuracy improvement
+
+Architecture Comparison:
+   • FinBERT: May improve 3-8% (refinement of existing knowledge)
+   • DistilBERT: Should improve 25-35% (learned neutral + finance)
+   • ELECTRA: Should improve 30-40% (learned task from scratch)
+
+================================================================================
+SAMPLE PREDICTIONS (First 10 sentences)
+================================================================================
+
+Sentence 1: The fair value of the company 's investment properties went down to EUR2 .769 bn at the end of Septe...
+   True Label:      negative
+   FinBERT:         negative ✓
+   DistilBERT:      negative ✓
+   ELECTRA:         neutral ✗
+
+Sentence 2: Shire proposes $30 bln all-share tie-up with Baxalta
+   True Label:      positive
+   FinBERT:         positive ✓
+   DistilBERT:      positive ✓
+   ELECTRA:         positive ✓
+
+Sentence 3: According to CEO Matti Karppinen , Frozen Foods posted a good result in 2010 , as it did in 2009 .
+   True Label:      positive
+   FinBERT:         positive ✓
+   DistilBERT:      positive ✓
+   ELECTRA:         positive ✓
+
+Sentence 4: The total value of the project is estimated to be over 3.0 mln euro $ 4.4 mln , of which the service...
+   True Label:      neutral
+   FinBERT:         neutral ✓
+   DistilBERT:      neutral ✓
+   ELECTRA:         neutral ✓
+
+Sentence 5: The fair value change of investment properties was EUR 15.8 mn , compared to EUR 22.9 mn in the thir...
+   True Label:      negative
+   FinBERT:         negative ✓
+   DistilBERT:      positive ✗
+   ELECTRA:         positive ✗
+
+Sentence 6: `` After the share purchase is completed , financing will also be provided to expand Latvia 's broad...
+   True Label:      positive
+   FinBERT:         positive ✓
+   DistilBERT:      positive ✓
+   ELECTRA:         neutral ✗
+
+Sentence 7: $INTC finally some nice downside move... looking for the 31 handle to break
+   True Label:      negative
+   FinBERT:         negative ✓
+   DistilBERT:      negative ✓
+   ELECTRA:         negative ✓
+
+Sentence 8: London Stock Exchange Shareholders Approve Merger With Deutsche BÃ¶rse
+   True Label:      positive
+   FinBERT:         positive ✓
+   DistilBERT:      positive ✓
+   ELECTRA:         positive ✓
+
+Sentence 9: Nordic banks have already had to write off sizable loans in Latvia , with Swedbank , Nordea , DnB NO...
+   True Label:      negative
+   FinBERT:         negative ✓
+   DistilBERT:      negative ✓
+   ELECTRA:         neutral ✗
+
+Sentence 10: Kingfisher takeover of Mr Bricolage could hit a brick wall
+   True Label:      negative
+   FinBERT:         negative ✓
+   DistilBERT:      negative ✓
+   ELECTRA:         negative ✓
+
+================================================================================
+RECOMMENDED NEXT STEPS
+================================================================================
+
+1. Compare trained_models_comparison.csv with pretrained_comparison.csv
+2. Calculate improvement percentages for each model
+3. Analyze which architecture benefited most from fine-tuning
+4. Select the best model for production deployment
+5. Consider model size vs accuracy trade-offs
+
+================================================================================
+END OF REPORT
+================================================================================
