@@ -4,7 +4,6 @@
 
 # Notes
 notes.txt
-data
 models
 configs
 
@@ -26,7 +25,7 @@ dist/
 *.egg-info/
 
 # Data & generated artifacts
-data/
+dataset/
 reports/
 models/finetuned/
 
