@@ -9,7 +9,7 @@ Features:
 - Same inference speed as BERT
 
 Usage in Colab:
-1. Runtime → Change runtime type → T4 GPU
+1. Runtime  Change runtime type  T4 GPU
 2. Run this entire cell
 3. Model saves to Google Drive
 """
@@ -17,7 +17,7 @@ Usage in Colab:
 # ============================================================
 # INSTALL DEPENDENCIES
 # ============================================================
-!pip install transformers datasets torch pandas scikit-learn pyarrow -q
+# !pip install transformers datasets torch pandas scikit-learn pyarrow -q
 
 # ============================================================
 # IMPORTS
@@ -90,7 +90,7 @@ TEST_SENTENCES = [
 ]
 
 print("="*70)
-print("🚀 TRAINING: ELECTRA for Financial Sentiment Analysis")
+print(" TRAINING: ELECTRA for Financial Sentiment Analysis")
 print("="*70)
 print(f"\nModel: {MODEL_NAME}")
 print(f"Expected params: ~110M (same as BERT)")
@@ -106,14 +106,14 @@ drive.mount('/content/drive', force_remount=False)
 # ============================================================
 # LOAD DATASET
 # ============================================================
-print("📥 Downloading FinancialPhraseBank dataset...")
+print("¥ Downloading FinancialPhraseBank dataset...")
 dataset = load_dataset("mltrev23/financial-sentiment-analysis")
 df = dataset['train'].to_pandas()
 df = df.rename(columns={'Sentence': 'text', 'Sentiment': 'label'})
 df['label'] = df['label'].str.lower()
 
-print(f"✅ Dataset loaded: {len(df)} samples")
-print(f"\n📊 Label distribution:")
+print(f" Dataset loaded: {len(df)} samples")
+print(f"\n Label distribution:")
 print(df['label'].value_counts())
 print(f"\nPercentages:")
 print(df['label'].value_counts(normalize=True) * 100)
@@ -131,7 +131,7 @@ train_df, val_df = train_test_split(
     stratify=df['label']
 )
 
-print(f"\n📊 Split: Train={len(train_df)}, Validation={len(val_df)}")
+print(f"\n Split: Train={len(train_df)}, Validation={len(val_df)}")
 
 # ============================================================
 # COMPUTE CLASS WEIGHTS
@@ -143,7 +143,7 @@ class_weights = compute_class_weight(
 )
 class_weights_tensor = torch.tensor(class_weights, dtype=torch.float32)
 
-print(f"\n⚖️ Class weights (to handle imbalance):")
+print(f"\n Class weights (to handle imbalance):")
 for label, weight in zip(LABELS, class_weights):
     print(f"   {label}: {weight:.3f}")
 
@@ -230,7 +230,7 @@ def compute_metrics(eval_pred):
 # ============================================================
 # LOAD MODEL & TOKENIZER
 # ============================================================
-print(f"\n📦 Loading ELECTRA tokenizer and model...")
+print(f"\n¦ Loading ELECTRA tokenizer and model...")
 
 tokenizer = AutoTokenizer.from_pretrained(MODEL_NAME)
 
@@ -256,7 +256,7 @@ model = AutoModelForSequenceClassification.from_pretrained(
 
 # Model size
 model_size = sum(p.numel() for p in model.parameters()) / 1e6
-print(f"✅ Model loaded: {model_size:.1f}M parameters")
+print(f" Model loaded: {model_size:.1f}M parameters")
 
 # ============================================================
 # CREATE DATASETS
@@ -304,27 +304,27 @@ trainer = WeightedTrainer(
 # TRAIN MODEL
 # ============================================================
 print(f"\n{'='*70}")
-print("🏋️ TRAINING STARTED")
+print(" TRAINING STARTED")
 print(f"{'='*70}\n")
 
 start_time = time.time()
 train_result = trainer.train()
 training_time = time.time() - start_time
 
-print(f"\n✅ Training complete! Time: {training_time/60:.2f} minutes")
+print(f"\n Training complete! Time: {training_time/60:.2f} minutes")
 
 # ============================================================
 # TRAINING HISTORY
 # ============================================================
 history = pd.DataFrame(trainer.state.log_history)
-print(f"\n📈 Training History:")
+print(f"\n Training History:")
 print(history[['epoch', 'loss', 'eval_loss', 'eval_accuracy', 'eval_f1_macro']].dropna())
 
 # ============================================================
 # FINAL EVALUATION
 # ============================================================
 print(f"\n{'='*70}")
-print("📊 FINAL EVALUATION")
+print(" FINAL EVALUATION")
 print(f"{'='*70}\n")
 
 eval_results = trainer.evaluate()
@@ -344,7 +344,7 @@ print(f"  Positive: {eval_results['eval_f1_positive']:.4f}")
 # TEST PREDICTIONS
 # ============================================================
 print(f"\n{'='*70}")
-print("🧪 TEST PREDICTIONS")
+print("§ª TEST PREDICTIONS")
 print(f"{'='*70}\n")
 
 model.eval()
@@ -360,14 +360,14 @@ for sentence in TEST_SENTENCES:
     
     predicted = id2label[pred_label]
     print(f"Text: '{sentence}'")
-    print(f"→ {predicted.upper()} ({confidence*100:.2f}% confidence)")
+    print(f" {predicted.upper()} ({confidence*100:.2f}% confidence)")
     print(f"  Probabilities: neg={probs[0][0]*100:.1f}%, neu={probs[0][1]*100:.1f}%, pos={probs[0][2]*100:.1f}%\n")
 
 # ============================================================
 # MEASURE INFERENCE SPEED
 # ============================================================
 print(f"{'='*70}")
-print("⚡ MEASURING INFERENCE SPEED")
+print(" MEASURING INFERENCE SPEED")
 print(f"{'='*70}\n")
 
 test_texts = val_df['text'].head(100).tolist()
@@ -394,7 +394,7 @@ trainer.save_model(save_dir)
 tokenizer.save_pretrained(save_dir)
 
 print(f"{'='*70}")
-print("💾 MODEL SAVED")
+print(" MODEL SAVED")
 print(f"{'='*70}\n")
 print(f"Location: {save_dir}")
 print(f"\nTo use this model locally:")
@@ -406,10 +406,10 @@ print(f"3. Load with: AutoModelForSequenceClassification.from_pretrained('models
 # SUMMARY
 # ============================================================
 print(f"\n{'='*70}")
-print("✅ TRAINING COMPLETE - ELECTRA")
+print(" TRAINING COMPLETE - ELECTRA")
 print(f"{'='*70}\n")
 
-print("📊 Summary:")
+print(" Summary:")
 print(f"  Model: ELECTRA ({model_size:.1f}M parameters)")
 print(f"  Training Time: {training_time/60:.2f} minutes")
 print(f"  Validation Accuracy: {eval_results['eval_accuracy']*100:.2f}%")
@@ -418,26 +418,26 @@ print(f"  F1 Negative: {eval_results['eval_f1_negative']:.4f}")
 print(f"  Inference Speed: {samples_per_sec:.2f} samples/second")
 print(f"  Model Size: ~440 MB (same as BERT)")
 
-print(f"\n💡 ELECTRA Advantages:")
-print(f"  ✅ Generator-discriminator architecture")
-print(f"  ✅ More sample-efficient training")
-print(f"  ✅ Often outperforms BERT (1-2% higher accuracy)")
-print(f"  ✅ Same model size as BERT")
-print(f"  ✅ Similar inference speed")
-print(f"  ✅ Better for smaller datasets")
+print(f"\n ELECTRA Advantages:")
+print(f"   Generator-discriminator architecture")
+print(f"   More sample-efficient training")
+print(f"   Often outperforms BERT (1-2% higher accuracy)")
+print(f"   Same model size as BERT")
+print(f"   Similar inference speed")
+print(f"   Better for smaller datasets")
 
-print(f"\n🎯 Best Use Cases:")
-print(f"  • When accuracy is the top priority")
-print(f"  • Limited training data scenarios")
-print(f"  • When you want cutting-edge architecture")
-print(f"  • Balanced performance requirements")
-print(f"  • Research and experimentation")
+print(f"\n Best Use Cases:")
+print(f"  ¢ When accuracy is the top priority")
+print(f"  ¢ Limited training data scenarios")
+print(f"  ¢ When you want cutting-edge architecture")
+print(f"  ¢ Balanced performance requirements")
+print(f"  ¢ Research and experimentation")
 
-print(f"\n📊 Expected Performance vs Competitors:")
-print(f"  • Accuracy: ~1-2% better than BERT")
-print(f"  • Accuracy: ~2-3% better than DistilBERT")
-print(f"  • Speed: Similar to BERT")
-print(f"  • Speed: ~40% slower than DistilBERT")
-print(f"  • Size: Same as BERT, larger than DistilBERT")
+print(f"\n Expected Performance vs Competitors:")
+print(f"  ¢ Accuracy: ~1-2% better than BERT")
+print(f"  ¢ Accuracy: ~2-3% better than DistilBERT")
+print(f"  ¢ Speed: Similar to BERT")
+print(f"  ¢ Speed: ~40% slower than DistilBERT")
+print(f"  ¢ Size: Same as BERT, larger than DistilBERT")
 
 print(f"\n{'='*70}\n")

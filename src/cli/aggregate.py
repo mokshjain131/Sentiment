@@ -13,7 +13,7 @@ def main():
     results = build_reports(args.dataset, args.ticker, args.out, window=args.window, file_format=args.format)
     print("Wrote reports:")
     for k,v in results.items():
-        print(f"  {k}: {v}")
+     print(f" {k}: {v}")
 
-if __name__ == "__main__":  # pragma: no cover
+if __name__ == "__main__": # pragma: no cover
     main()

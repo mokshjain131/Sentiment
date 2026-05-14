@@ -27,7 +27,7 @@ class SentimentAnalysisApp:
         self.root.geometry("1000x700")
         self.root.minsize(900, 600)
         
-        # Color scheme - Professional dark theme
+        # Color scheme - Professional dark theme with high contrast
         self.colors = {
             'bg_dark': '#1e1e1e',
             'bg_medium': '#2d2d2d',
@@ -38,7 +38,8 @@ class SentimentAnalysisApp:
             'warning': '#ff9800',
             'error': '#f44336',
             'text': '#ffffff',
-            'text_secondary': '#b0b0b0',
+            'text_secondary': '#e0e0e0',  # Much lighter for better contrast on dark bg
+            'text_muted': '#888888',      # Darker for contrast on light bg
             'border': '#555555'
         }
         
@@ -66,7 +67,7 @@ class SentimentAnalysisApp:
         
         title_label = tk.Label(
             header_frame,
-            text="📊 Financial Sentiment Analysis",
+            text=" Financial Sentiment Analysis",
             font=("Segoe UI", 20, "bold"),
             bg=self.colors['bg_medium'],
             fg=self.colors['text']
@@ -75,7 +76,7 @@ class SentimentAnalysisApp:
         
         subtitle_label = tk.Label(
             header_frame,
-            text="FinBERT Fine-Tuned Model • 81.8% Accuracy • Production Ready",
+            text="FinBERT Fine-Tuned Model ¢ 81.8% Accuracy ¢ Production Ready",
             font=("Segoe UI", 10),
             bg=self.colors['bg_medium'],
             fg=self.colors['text_secondary']
@@ -115,7 +116,7 @@ class SentimentAnalysisApp:
     def create_fetch_tab(self):
         """Tab 1: Fetch News"""
         tab = tk.Frame(self.notebook, bg=self.colors['bg_dark'])
-        self.notebook.add(tab, text="📰 Fetch News")
+        self.notebook.add(tab, text="° Fetch News")
         
         # Scrollable frame
         canvas = tk.Canvas(tab, bg=self.colors['bg_dark'], highlightthickness=0)
@@ -185,7 +186,7 @@ class SentimentAnalysisApp:
         # Fetch button
         fetch_btn = tk.Button(
             scrollable_frame,
-            text="🔍 Fetch News Articles",
+            text=" Fetch News Articles",
             font=("Segoe UI", 12, "bold"),
             bg=self.colors['accent'],
             fg=self.colors['text'],
@@ -229,7 +230,7 @@ class SentimentAnalysisApp:
     def create_analyze_tab(self):
         """Tab 2: Analyze Sentiment"""
         tab = tk.Frame(self.notebook, bg=self.colors['bg_dark'])
-        self.notebook.add(tab, text="📈 Analyze Sentiment")
+        self.notebook.add(tab, text=" Analyze Sentiment")
         
         # Scrollable frame
         canvas = tk.Canvas(tab, bg=self.colors['bg_dark'], highlightthickness=0)
@@ -335,7 +336,7 @@ class SentimentAnalysisApp:
         # Analyze button
         analyze_btn = tk.Button(
             scrollable_frame,
-            text="📊 Analyze Sentiment",
+            text=" Analyze Sentiment",
             font=("Segoe UI", 12, "bold"),
             bg=self.colors['success'],
             fg=self.colors['text'],
@@ -379,7 +380,7 @@ class SentimentAnalysisApp:
     def create_test_tab(self):
         """Tab 3: Test Sentence"""
         tab = tk.Frame(self.notebook, bg=self.colors['bg_dark'])
-        self.notebook.add(tab, text="🧪 Test Sentence")
+        self.notebook.add(tab, text="§ª Test Sentence")
         
         # Instructions
         instructions = tk.Label(
@@ -421,9 +422,9 @@ class SentimentAnalysisApp:
         example_frame.pack(pady=10)
         
         examples = [
-            ("📈 Positive Example", "Company profits surged 50% exceeding all expectations"),
-            ("➡️ Neutral Example", "The firm reported quarterly earnings as expected"),
-            ("📉 Negative Example", "Stock plunged amid scandal and massive layoffs")
+            (" Positive Example", "Company profits surged 50% exceeding all expectations"),
+            (" Neutral Example", "The firm reported quarterly earnings as expected"),
+            (" Negative Example", "Stock plunged amid scandal and massive layoffs")
         ]
         
         for text, example in examples:
@@ -445,7 +446,7 @@ class SentimentAnalysisApp:
         # Predict button
         predict_btn = tk.Button(
             tab,
-            text="🎯 Predict Sentiment",
+            text=" Predict Sentiment",
             font=("Segoe UI", 12, "bold"),
             bg=self.colors['accent'],
             fg=self.colors['text'],
@@ -486,7 +487,7 @@ class SentimentAnalysisApp:
     def create_help_tab(self):
         """Tab 4: Help"""
         tab = tk.Frame(self.notebook, bg=self.colors['bg_dark'])
-        self.notebook.add(tab, text="ℹ️ Help")
+        self.notebook.add(tab, text=" Help")
         
         help_text = scrolledtext.ScrolledText(
             tab,
@@ -502,72 +503,72 @@ class SentimentAnalysisApp:
         help_text.pack(fill=tk.BOTH, expand=True, padx=10, pady=10)
         
         help_content = """
-📖 USER GUIDE
+ USER GUIDE
 
 SETUP:
 1. Set NewsAPI key: $env:NEWSAPI_KEY="your_key"
-2. Ensure model is at: models/Colab/finetuned_improved/
+2. Ensure model is at: models/Colab/FinBERT_improved/
 3. Run: python desktop_app.py
 
 USAGE FLOW:
 
-📰 Tab 1: Fetch News
-   • Enter company name and ticker
-   • Add keywords (comma-separated)
-   • Choose days to fetch and max articles
-   • Click "Fetch News"
-   • Dataset path will auto-fill for next step
+° Tab 1: Fetch News
+   ¢ Enter company name and ticker
+   ¢ Add keywords (comma-separated)
+   ¢ Choose days to fetch and max articles
+   ¢ Click "Fetch News"
+   ¢ Dataset path will auto-fill for next step
 
-📈 Tab 2: Analyze Sentiment
-   • Dataset path should be auto-filled
-   • Adjust rolling window (default: 7 days)
-   • Adjust alert threshold (default: 2.5)
-   • Click "Analyze Sentiment"
-   • View daily metrics and alerts
+ Tab 2: Analyze Sentiment
+   ¢ Dataset path should be auto-filled
+   ¢ Adjust rolling window (default: 7 days)
+   ¢ Adjust alert threshold (default: 2.5)
+   ¢ Click "Analyze Sentiment"
+   ¢ View daily metrics and alerts
 
-🧪 Tab 3: Test Sentences
-   • Enter any financial text
-   • Or click example buttons
-   • Click "Predict Sentiment"
-   • See sentiment probabilities
+§ª Tab 3: Test Sentences
+   ¢ Enter any financial text
+   ¢ Or click example buttons
+   ¢ Click "Predict Sentiment"
+   ¢ See sentiment probabilities
 
 OUTPUT FILES:
-• Fetched news: data/processed/YYYYMMDD/ticker_YYYYMMDD.{csv|parquet}
-• Daily metrics: reports/ticker/daily.{csv|parquet}
-• Alerts: reports/ticker/alerts.{csv|parquet}
+¢ Fetched news: data/processed/YYYYMMDD/ticker_YYYYMMDD.{csv|parquet}
+¢ Daily metrics: reports/ticker/daily.{csv|parquet}
+¢ Alerts: reports/ticker/alerts.{csv|parquet}
 
 MODEL DETAILS:
-• Base: ProsusAI/finbert
-• Training: FinancialPhraseBank (5,842 sentences)
-• Performance: 81.8% accuracy, 79.3% F1 macro
-• Classes: Negative, Neutral, Positive
+¢ Base: ProsusAI/finbert
+¢ Training: FinancialPhraseBank (5,842 sentences)
+¢ Performance: 81.8% accuracy, 79.3% F1 macro
+¢ Classes: Negative, Neutral, Positive
 
 TROUBLESHOOTING:
 
 "NEWSAPI_KEY not set"
-→ Set environment variable: $env:NEWSAPI_KEY="key"
+ Set environment variable: $env:NEWSAPI_KEY="key"
 
 "Model not found"
-→ Ensure model at: models/Colab/finetuned_improved/
+ Ensure model at: models/Colab/FinBERT_improved/
 
 "No articles fetched"
-→ Check API key, try different keywords
+ Check API key, try different keywords
 
 KEYBOARD SHORTCUTS:
-• Ctrl+C: Copy from output areas
-• Ctrl+A: Select all in input areas
-• Ctrl+V: Paste in input areas
+¢ Ctrl+C: Copy from output areas
+¢ Ctrl+A: Select all in input areas
+¢ Ctrl+V: Paste in input areas
 
 DOCUMENTATION:
-• README.md - Quick start guide
-• COMPLETE_DOCUMENTATION.md - Full documentation
-• UI_GUIDE.md - Web UI documentation
+¢ README.md - Quick start guide
+¢ COMPLETE_DOCUMENTATION.md - Full documentation
+¢ UI_GUIDE.md - Web UI documentation
 
 STATUS INDICATORS:
-• ✅ Success (green message)
-• ⚠️ Warning (yellow message)
-• ❌ Error (red message)
-• 🔄 Processing (blue message)
+¢  Success (green message)
+¢  Warning (yellow message)
+¢  Error (red message)
+¢  Processing (blue message)
 
 For complete documentation, see COMPLETE_DOCUMENTATION.md Section 11.
         """
@@ -659,18 +660,18 @@ For complete documentation, see COMPLETE_DOCUMENTATION.md Section 11.
         try:
             config = load_config()
             if not config.newsapi_key:
-                self.set_status("⚠️ Warning: NEWSAPI_KEY not set", 'warning')
+                self.set_status(" Warning: NEWSAPI_KEY not set", 'warning')
             else:
-                self.set_status("✅ Ready - API key configured", 'success')
+                self.set_status(" Ready - API key configured", 'success')
         except:
-            self.set_status("⚠️ Warning: Could not load config", 'warning')
+            self.set_status(" Warning: Could not load config", 'warning')
         
         # Check model
-        model_path = Path("models/Colab/finetuned_improved")
+        model_path = Path("models/Colab/FinBERT_improved")
         if not model_path.exists():
             messagebox.showwarning(
                 "Model Not Found",
-                "Model not found at: models/Colab/finetuned_improved/\n\n"
+                "Model not found at: models/Colab/FinBERT_improved/\n\n"
                 "Prediction features will not work until the model is available."
             )
     
@@ -701,17 +702,17 @@ For complete documentation, see COMPLETE_DOCUMENTATION.md Section 11.
         
         def task():
             self.is_processing = True
-            self.set_status("🔄 Fetching news articles...", 'accent')
+            self.set_status(" Fetching news articles...", 'accent')
             
             try:
                 # Validate API key
                 try:
                     config = load_config()
                     if not config.newsapi_key:
-                        self.show_output(self.fetch_output, "❌ Error: NEWSAPI_KEY not set\n", 'error')
+                        self.show_output(self.fetch_output, " Error: NEWSAPI_KEY not set\n", 'error')
                         return
                 except Exception as e:
-                    self.show_output(self.fetch_output, f"❌ Error: {str(e)}\n", 'error')
+                    self.show_output(self.fetch_output, f" Error: {str(e)}\n", 'error')
                     return
                 
                 # Get inputs
@@ -767,7 +768,7 @@ For complete documentation, see COMPLETE_DOCUMENTATION.md Section 11.
                     preview = df[['title', 'source', 'published_at']].head(5)
                     
                     result = f"""
-✅ Success! Fetched {count} articles for {ticker}
+ Success! Fetched {count} articles for {ticker}
 
 Output File: {output_file}
 
@@ -780,14 +781,14 @@ Next Step: Go to "Analyze Sentiment" tab to generate reports.
                     self.show_output(self.fetch_output, result, 'success')
                     self.dataset_path.set(str(output_file))
                     self.ticker_analyze.set(ticker)
-                    self.set_status(f"✅ Fetched {count} articles", 'success')
+                    self.set_status(f" Fetched {count} articles", 'success')
                 else:
-                    self.show_output(self.fetch_output, f"⚠️ Fetched {count} articles but file not found at {data_dir}\n", 'warning')
-                    self.set_status(f"⚠️ File not found", 'warning')
+                    self.show_output(self.fetch_output, f" Fetched {count} articles but file not found at {data_dir}\n", 'warning')
+                    self.set_status(f" File not found", 'warning')
                     
             except Exception as e:
-                self.show_output(self.fetch_output, f"❌ Error: {str(e)}\n", 'error')
-                self.set_status("❌ Fetch failed", 'error')
+                self.show_output(self.fetch_output, f" Error: {str(e)}\n", 'error')
+                self.set_status(" Fetch failed", 'error')
             finally:
                 self.is_processing = False
         
@@ -802,12 +803,12 @@ Next Step: Go to "Analyze Sentiment" tab to generate reports.
         
         def task():
             self.is_processing = True
-            self.set_status("🔄 Analyzing sentiment...", 'accent')
+            self.set_status(" Analyzing sentiment...", 'accent')
             
             try:
                 dataset_path = self.dataset_path.get()
                 if not dataset_path or not Path(dataset_path).exists():
-                    self.show_output(self.analyze_output, "❌ Error: Please fetch news first or provide valid dataset path\n", 'error')
+                    self.show_output(self.analyze_output, " Error: Please fetch news first or provide valid dataset path\n", 'error')
                     return
                 
                 ticker = self.ticker_analyze.get()
@@ -846,9 +847,9 @@ Next Step: Go to "Analyze Sentiment" tab to generate reports.
                     from transformers import AutoTokenizer, AutoModelForSequenceClassification
                     import torch
                     
-                    model_path = "models/Colab/finetuned_improved"
+                    model_path = "models/Colab/FinBERT_improved"
                     if not Path(model_path).exists():
-                        self.show_output(self.analyze_output, "❌ Error: Model not found at models/Colab/finetuned_improved/\n", 'error')
+                        self.show_output(self.analyze_output, " Error: Model not found at models/Colab/FinBERT_improved/\n", 'error')
                         return
                     
                     tokenizer = AutoTokenizer.from_pretrained(model_path)
@@ -887,7 +888,7 @@ Next Step: Go to "Analyze Sentiment" tab to generate reports.
                     else:
                         df.to_parquet(labeled_path, index=False)
                     
-                    self.show_output(self.analyze_output, f"✅ Predictions complete! Saved to {labeled_path}\n", 'success')
+                    self.show_output(self.analyze_output, f" Predictions complete! Saved to {labeled_path}\n", 'success')
                     dataset_path = labeled_path
                 else:
                     self.show_output(self.analyze_output, f"Dataset already labeled, skipping prediction step.\n", 'accent')
@@ -918,14 +919,14 @@ Next Step: Go to "Analyze Sentiment" tab to generate reports.
                 
                 # Check if we have data
                 if daily_df.empty or daily_df['article_count'].sum() == 0:
-                    self.show_output(self.analyze_output, f"⚠️ No articles found for ticker {ticker}. Make sure the ticker matches the fetched data.\n", 'warning')
-                    self.set_status(f"⚠️ No articles for {ticker}", 'warning')
+                    self.show_output(self.analyze_output, f" No articles found for ticker {ticker}. Make sure the ticker matches the fetched data.\n", 'warning')
+                    self.set_status(f" No articles for {ticker}", 'warning')
                     return
                 
                 # Calculate detailed statistics
                 total_articles = int(daily_df['article_count'].sum())
                 avg_sentiment = daily_df['mean_score'].mean()
-                sentiment_label = "📈 Positive" if avg_sentiment > 0.2 else "📉 Negative" if avg_sentiment < -0.2 else "➡️ Neutral"
+                sentiment_label = " Positive" if avg_sentiment > 0.2 else " Negative" if avg_sentiment < -0.2 else " Neutral"
                 
                 # Get sentiment distribution from original labeled data
                 if dataset_path.endswith('.csv'):
@@ -946,11 +947,11 @@ Next Step: Go to "Analyze Sentiment" tab to generate reports.
                 daily_display.columns = ['Date', 'Sentiment', 'Articles', 'Positive%', 'Negative%']
                 
                 result = f"""
-📊 SENTIMENT ANALYSIS RESULTS
+ SENTIMENT ANALYSIS RESULTS
 
-═══════════════════════════════════════════════════
+
 OVERALL SUMMARY
-═══════════════════════════════════════════════════
+
 Ticker: {ticker.upper()}
 Total Articles Analyzed: {total_articles}
 Analysis Period: {len(daily_df)} days
@@ -960,35 +961,35 @@ Average Sentiment Score: {avg_sentiment:.3f} {sentiment_label}
 Rolling Window: {window} days
 
 SENTIMENT DISTRIBUTION:
-  📈 Positive: {pct_positive:.1f}% ({sentiment_counts.get('positive', 0)} articles)
-  ➡️ Neutral:  {pct_neutral:.1f}% ({sentiment_counts.get('neutral', 0)} articles)
-  📉 Negative: {pct_negative:.1f}% ({sentiment_counts.get('negative', 0)} articles)
+   Positive: {pct_positive:.1f}% ({sentiment_counts.get('positive', 0)} articles)
+   Neutral:  {pct_neutral:.1f}% ({sentiment_counts.get('neutral', 0)} articles)
+   Negative: {pct_negative:.1f}% ({sentiment_counts.get('negative', 0)} articles)
 
-═══════════════════════════════════════════════════
+
 DAILY BREAKDOWN (All Days)
-═══════════════════════════════════════════════════
+
 {daily_display.to_string(index=False)}
 
-═══════════════════════════════════════════════════
-ALERTS & ANOMALIES
-═══════════════════════════════════════════════════
-Total Alerts Detected: {len(alerts_df)}
-{alerts_df.to_string(index=False) if len(alerts_df) > 0 else "✅ No significant sentiment spikes detected."}
 
-═══════════════════════════════════════════════════
-📁 REPORTS SAVED TO:
-═══════════════════════════════════════════════════
-• Daily Metrics: {daily_file}
-• Alerts Report: {alerts_file}
-• Labeled Dataset: {dataset_path}
+ALERTS & ANOMALIES
+
+Total Alerts Detected: {len(alerts_df)}
+{alerts_df.to_string(index=False) if len(alerts_df) > 0 else " No significant sentiment spikes detected."}
+
+
+ REPORTS SAVED TO:
+
+¢ Daily Metrics: {daily_file}
+¢ Alerts Report: {alerts_file}
+¢ Labeled Dataset: {dataset_path}
                 """
                 
                 self.show_output(self.analyze_output, result, 'success')
-                self.set_status(f"✅ Analyzed {total_articles} articles - {len(alerts_df)} alerts", 'success')
+                self.set_status(f" Analyzed {total_articles} articles - {len(alerts_df)} alerts", 'success')
                 
             except Exception as e:
-                self.show_output(self.analyze_output, f"❌ Error: {str(e)}\n", 'error')
-                self.set_status("❌ Analysis failed", 'error')
+                self.show_output(self.analyze_output, f" Error: {str(e)}\n", 'error')
+                self.set_status(" Analysis failed", 'error')
             finally:
                 self.is_processing = False
         
@@ -1003,7 +1004,7 @@ Total Alerts Detected: {len(alerts_df)}
         
         def task():
             self.is_processing = True
-            self.set_status("🔄 Predicting sentiment...", 'accent')
+            self.set_status(" Predicting sentiment...", 'accent')
             
             try:
                 from transformers import AutoTokenizer, AutoModelForSequenceClassification
@@ -1012,12 +1013,12 @@ Total Alerts Detected: {len(alerts_df)}
                 model_path = "models/Colab/finetuned_improved"
                 
                 if not Path(model_path).exists():
-                    self.show_output(self.test_output, "❌ Error: Model not found at models/Colab/finetuned_improved/\n", 'error')
+                    self.show_output(self.test_output, " Error: Model not found at models/Colab/finetuned_improved/\n", 'error')
                     return
                 
                 text = self.test_input.get(1.0, tk.END).strip()
                 if not text:
-                    self.show_output(self.test_output, "❌ Error: Please enter some text\n", 'error')
+                    self.show_output(self.test_output, " Error: Please enter some text\n", 'error')
                     return
                 
                 self.show_output(self.test_output, "Loading model...\n", 'accent')
@@ -1040,23 +1041,23 @@ Total Alerts Detected: {len(alerts_df)}
                 confidence = probs[prediction].item()
                 
                 result = f"""
-🎯 PREDICTION: {predicted_label.upper()} ({confidence:.2%} confidence)
+ PREDICTION: {predicted_label.upper()} ({confidence:.2%} confidence)
 
 PROBABILITIES:
-  📉 Negative: {probs[0]:.2%}
-  ➡️ Neutral:  {probs[1]:.2%}
-  📈 Positive: {probs[2]:.2%}
+   Negative: {probs[0]:.2%}
+   Neutral:  {probs[1]:.2%}
+   Positive: {probs[2]:.2%}
 
 INPUT TEXT:
 {text}
                 """
                 
                 self.show_output(self.test_output, result, 'success')
-                self.set_status(f"✅ Prediction: {predicted_label.upper()}", 'success')
+                self.set_status(f" Prediction: {predicted_label.upper()}", 'success')
                 
             except Exception as e:
-                self.show_output(self.test_output, f"❌ Error: {str(e)}\n", 'error')
-                self.set_status("❌ Prediction failed", 'error')
+                self.show_output(self.test_output, f" Error: {str(e)}\n", 'error')
+                self.set_status(" Prediction failed", 'error')
             finally:
                 self.is_processing = False
         

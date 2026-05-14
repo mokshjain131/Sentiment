@@ -15,16 +15,16 @@ def build_reports(labeled_path: str, ticker: str, out_dir: str = 'reports', wind
             df['tickers'] = df['tickers'].apply(lambda x: ast.literal_eval(x) if isinstance(x, str) and x.strip() else [])
     else:
         df = pd.read_parquet(labeled_path)
-    
+
     # Prepare articles (adds sentiment_score if missing)
     df = prepare_articles(df)
-    
+
     daily = daily_ticker_aggregate(df, ticker)
     daily = rolling_trend(daily, window=window)
     alerts = detect_alerts(daily)
     out = Path(out_dir) / ticker.lower()
     out.mkdir(parents=True, exist_ok=True)
-    
+
     # Save in specified format
     if file_format.lower() == "csv":
         daily_fp = out / 'daily.csv'
@@ -36,5 +36,5 @@ def build_reports(labeled_path: str, ticker: str, out_dir: str = 'reports', wind
         alerts_fp = out / 'alerts.parquet'
         daily.to_parquet(daily_fp, index=False)
         alerts.to_parquet(alerts_fp, index=False)
-    
+
     return {'daily': str(daily_fp), 'alerts': str(alerts_fp)}

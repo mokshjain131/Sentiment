@@ -2,7 +2,7 @@ from __future__ import annotations
 from datetime import datetime
 from pathlib import Path
 import pandas as pd
-from ..loaders import *  # noqa: F401
+from ..loaders import * # noqa: F401
 from ...input.schemas import FetchParams, Article
 from ...services.news_api_client import NewsAPIClient, build_query, hash_article
 from ...processing.clean import clean_text
@@ -69,7 +69,7 @@ def fetch_and_store(params: FetchParams, out_dir: str = "data", client: NewsAPIC
     date_part = df.published_at.dt.strftime("%Y%m%d").mode()[0]
     processed_path = Path(out_dir) / "processed" / date_part
     processed_path.mkdir(parents=True, exist_ok=True)
-    
+
     # Support both parquet and csv formats
     if file_format.lower() == "csv":
         fname = f"{params.ticker.lower()}_{date_part}.csv"
@@ -77,7 +77,7 @@ def fetch_and_store(params: FetchParams, out_dir: str = "data", client: NewsAPIC
     else:
         fname = f"{params.ticker.lower()}_{date_part}.parquet"
         df.to_parquet(processed_path / fname, index=False)
-    
+
     if verbose:
         print(f"[ingest] Wrote {len(df)} rows to {processed_path / fname}")
     return len(df)

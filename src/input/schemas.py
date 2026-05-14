@@ -16,13 +16,12 @@ class FetchParams(BaseModel):
 
     @field_validator("from_date", "to_date", mode="before")
     @classmethod
-    def normalize_date(cls, v):  # Accept date, datetime, or ISO string; return ISO8601 string
+    def normalize_date(cls, v):
         if v is None:
             return v
         if isinstance(v, datetime):
             return v.isoformat(timespec="seconds")
         if isinstance(v, date):
-            # ensure it is a full-day date converted to ISO midnight
             return datetime(v.year, v.month, v.day).isoformat() + "Z"
         if isinstance(v, str):
             return v

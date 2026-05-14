@@ -26,7 +26,7 @@ def load_test_data(num_samples=200):
     # Try to find the dataset file
     dataset_path = Path('data/datasets/financialphrasebank.csv')
     if not dataset_path.exists():
-        print(f"❌ Dataset not found at {dataset_path}")
+        print(f" Dataset not found at {dataset_path}")
         return []
 
     df = pd.read_csv(dataset_path)
@@ -48,7 +48,7 @@ def load_test_data(num_samples=200):
     random.seed(42)
     random.shuffle(test_samples)
     
-    print(f"✅ Loaded {len(test_samples)} test sentences:")
+    print(f" Loaded {len(test_samples)} test sentences:")
     for label in ['positive', 'negative', 'neutral']:
         count = sum(1 for _, lbl in test_samples if lbl == label)
         print(f"   {label}: {count} samples")
@@ -61,14 +61,14 @@ TEST_SENTENCES = load_test_data(num_samples=200)
 
 def load_model_pipeline(model_name, description):
     """Generic function to load a model pipeline"""
-    print(f"📦 Loading {description}...")
+    print(f"¦ Loading {description}...")
     print(f"   Model: {model_name}")
     try:
         pipe = pipeline("sentiment-analysis", model=model_name, tokenizer=model_name)
-        print(f"   ✅ Loaded successfully")
+        print(f"    Loaded successfully")
         return pipe
     except Exception as e:
-        print(f"   ❌ Failed to load: {e}")
+        print(f"    Failed to load: {e}")
         return None
 
 def map_label(label, model_type):
@@ -112,7 +112,7 @@ def main():
         return
 
     print("=" * 70)
-    print("🧪 TESTING SOTA MODELS (State of the Art Comparison)")
+    print("§ª TESTING SOTA MODELS (State of the Art Comparison)")
     print("=" * 70)
     print()
     
@@ -131,7 +131,7 @@ def main():
 
     print()
     print("=" * 70)
-    print("🚀 STARTING PREDICTIONS")
+    print(" STARTING PREDICTIONS")
     print("=" * 70)
     print()
     
@@ -171,7 +171,7 @@ def main():
     
     print()
     print("=" * 70)
-    print("🏆 RESULTS")
+    print(" RESULTS")
     print("=" * 70)
     print(f"FinBERT (Baseline):        {f_acc:.1f}%")
     print(f"Financial DistilRoBERTa:   {fr_acc:.1f}%")

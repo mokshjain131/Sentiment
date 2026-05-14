@@ -15,14 +15,14 @@ def main():
     args = ap.parse_args()
 
     if args.eval:
-        metrics = evaluate_model(args.out, args.dataset)
-        print(metrics)
-        return
+     metrics = evaluate_model(args.out, args.dataset)
+    print(metrics)
+    return
 
     model_dir = fine_tune(args.model_name, args.dataset, output_dir=args.out, epochs=args.epochs, batch_size=args.batch, lr=args.lr, label_col=args.label_col)
     metrics = evaluate_model(model_dir, args.dataset)
     print("Training complete. Metrics:")
     print(metrics)
 
-if __name__ == "__main__":  # pragma: no cover
+if __name__ == "__main__": # pragma: no cover
     main()

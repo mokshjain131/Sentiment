@@ -32,7 +32,7 @@ def load_test_data(num_samples=50):
     for label in ['positive', 'negative', 'neutral']:
         class_data = df[df['label'] == label]
         if len(class_data) < samples_per_class:
-            print(f"⚠️  Warning: Only {len(class_data)} samples available for {label}, sampling {len(class_data)}")
+            print(f"  Warning: Only {len(class_data)} samples available for {label}, sampling {len(class_data)}")
             sampled = class_data.sample(n=len(class_data), random_state=42)
         else:
             sampled = class_data.sample(n=samples_per_class, random_state=42)
@@ -43,7 +43,7 @@ def load_test_data(num_samples=50):
     random.seed(42)
     random.shuffle(test_samples)
     
-    print(f"✅ Loaded {len(test_samples)} test sentences:")
+    print(f" Loaded {len(test_samples)} test sentences:")
     for label in ['positive', 'negative', 'neutral']:
         count = sum(1 for _, lbl in test_samples if lbl == label)
         print(f"   {label}: {count} samples")
@@ -54,12 +54,12 @@ def load_test_data(num_samples=50):
 # Load test sentences from dataset
 print("Loading test data from FinancialPhraseBank dataset...")
 TEST_SENTENCES = load_test_data(num_samples=200)
-print(f"✅ Loaded {len(TEST_SENTENCES)} test sentences (balanced across positive/negative/neutral)")
+print(f" Loaded {len(TEST_SENTENCES)} test sentences (balanced across positive/negative/neutral)")
 print()
 
 def load_finbert():
     """Load FinBERT (already fine-tuned for financial sentiment)"""
-    print("📦 Loading FinBERT (financial sentiment specialist)...")
+    print("¦ Loading FinBERT (financial sentiment specialist)...")
     model_name = "ProsusAI/finbert"
     tokenizer = AutoTokenizer.from_pretrained(model_name)
     model = AutoModelForSequenceClassification.from_pretrained(model_name)
@@ -73,12 +73,12 @@ def load_finbert():
         # FinBERT standard mapping
         label_map = {0: "positive", 1: "negative", 2: "neutral"}
     
-    print(f"   ✅ FinBERT loaded (labels: {list(label_map.values())})")
+    print(f"    FinBERT loaded (labels: {list(label_map.values())})")
     return tokenizer, model, label_map
 
 def load_distilbert():
     """Load DistilBERT (fine-tuned on general sentiment SST-2)"""
-    print("📦 Loading DistilBERT (general sentiment)...")
+    print("¦ Loading DistilBERT (general sentiment)...")
     model_name = "distilbert-base-uncased-finetuned-sst-2-english"
     
     # Use pipeline for simplicity (SST-2 has POSITIVE/NEGATIVE only)
@@ -88,13 +88,13 @@ def load_distilbert():
         tokenizer=model_name
     )
     
-    print("   ✅ DistilBERT loaded (labels: POSITIVE, NEGATIVE)")
-    print("   ⚠️  Note: SST-2 has NO NEUTRAL label!")
+    print("    DistilBERT loaded (labels: POSITIVE, NEGATIVE)")
+    print("     Note: SST-2 has NO NEUTRAL label!")
     return sentiment_pipeline
 
 def load_electra_sentiment():
     """Load ELECTRA fine-tuned for emotion/sentiment"""
-    print("📦 Loading ELECTRA (emotion detection)...")
+    print("¦ Loading ELECTRA (emotion detection)...")
     
     # ELECTRA doesn't have a standard sentiment model
     # Use emotion-finetuned version as best alternative
@@ -105,12 +105,12 @@ def load_electra_sentiment():
             model=model_name,
             tokenizer=model_name
         )
-        print("   ✅ ELECTRA loaded (emotion labels)")
-        print("   ⚠️  Note: Trained on emotions, not financial sentiment")
+        print("    ELECTRA loaded (emotion labels)")
+        print("     Note: Trained on emotions, not financial sentiment")
         return sentiment_pipeline
     except Exception as e:
-        print(f"   ⚠️  Could not load ELECTRA emotion model: {e}")
-        print("   ℹ️  ELECTRA predictions will be marked as N/A")
+        print(f"     Could not load ELECTRA emotion model: {e}")
+        print("     ELECTRA predictions will be marked as N/A")
         return None
 
 def predict_finbert(text, tokenizer, model, label_map):
@@ -159,7 +159,7 @@ def predict_electra(text, pipeline):
 
 def main():
     print("=" * 70)
-    print("🧪 TESTING PRE-TRAINED MODELS (Before Fine-tuning)")
+    print("§ª TESTING PRE-TRAINED MODELS (Before Fine-tuning)")
     print("=" * 70)
     print()
     print("This script tests 3 models in their PRE-TRAINED state:")
@@ -173,13 +173,13 @@ def main():
     print()
     
     # Load models
-    print("📥 Loading models from Hugging Face...\n")
+    print("¥ Loading models from Hugging Face...\n")
     finbert_tokenizer, finbert_model, finbert_labels = load_finbert()
     distilbert_pipeline = load_distilbert()
     electra_pipeline = load_electra_sentiment()
     
     print()
-    print("✅ All models loaded successfully!")
+    print(" All models loaded successfully!")
     print()
     print("=" * 70)
     print()
@@ -225,15 +225,15 @@ def main():
                 result['finbert_prob_neutral'] = round(finbert_probs[2], 4)
             results.append(result)
             # Display predictions
-            finbert_mark = "✓" if finbert_label == true_label else "✗"
-            distilbert_mark = "✓" if distilbert_label == true_label else "✗"
-            electra_mark = "✓" if electra_label == true_label else "✗"
+            finbert_mark = "" if finbert_label == true_label else ""
+            distilbert_mark = "" if distilbert_label == true_label else ""
+            electra_mark = "" if electra_label == true_label else ""
             print(f"   FinBERT:    {finbert_label:8s} ({finbert_conf*100:.1f}%) {finbert_mark}")
             print(f"   DistilBERT: {distilbert_label:8s} ({distilbert_conf*100:.1f}%) {distilbert_mark}")
             print(f"   ELECTRA:    {electra_label:8s} ({electra_conf*100:.1f}%) {electra_mark} (raw: {electra_orig_label})")
             print()
         except Exception as e:
-            print(f"❌ Error processing sentence {i}: {e}")
+            print(f" Error processing sentence {i}: {e}")
             print("   Skipping this sentence and continuing...")
             print()
             continue
@@ -242,10 +242,10 @@ def main():
     df = pd.DataFrame(results)
     
     if len(df) == 0:
-        print("❌ No results to analyze. Check for errors above.")
+        print(" No results to analyze. Check for errors above.")
         return
     
-    print(f"✅ Processed {len(df)} sentences successfully (out of {len(TEST_SENTENCES)})")
+    print(f" Processed {len(df)} sentences successfully (out of {len(TEST_SENTENCES)})")
     print()
     
     # --- METRICS: precision, recall, f1, accuracy ---
@@ -269,7 +269,7 @@ def main():
     # ============================================
     
     print("=" * 70)
-    print("🎯 ACCURACY COMPARISON REPORT - PRE-TRAINED MODELS")
+    print(" ACCURACY COMPARISON REPORT - PRE-TRAINED MODELS")
     print("=" * 70)
     print()
     
@@ -278,14 +278,14 @@ def main():
     distilbert_acc = df['distilbert_correct'].sum() / len(df) * 100
     electra_acc = df['electra_correct'].sum() / len(df) * 100
     
-    print("📊 OVERALL ACCURACY:")
+    print(" OVERALL ACCURACY:")
     print(f"   FinBERT:    {finbert_acc:5.1f}% ({df['finbert_correct'].sum()}/{len(df)} correct)")
     print(f"   DistilBERT: {distilbert_acc:5.1f}% ({df['distilbert_correct'].sum()}/{len(df)} correct)")
     print(f"   ELECTRA:    {electra_acc:5.1f}% ({df['electra_correct'].sum()}/{len(df)} correct)")
     print()
     
     # Per-class accuracy
-    print("📈 PER-CLASS ACCURACY:")
+    print(" PER-CLASS ACCURACY:")
     for label in ['positive', 'negative', 'neutral']:
         class_df = df[df['true_label'] == label]
         if len(class_df) > 0:
@@ -300,7 +300,7 @@ def main():
     print()
     
     # Confusion matrix-style breakdown
-    print("🔍 PREDICTION BREAKDOWN (Confusion Matrix):")
+    print(" PREDICTION BREAKDOWN (Confusion Matrix):")
     for model in ['finbert', 'distilbert', 'electra']:
         print(f"\n   {model.upper()}:")
         pred_col = f'{model}_prediction'
@@ -308,7 +308,7 @@ def main():
             class_preds = df[df['true_label'] == true_label][pred_col].value_counts()
             if len(class_preds) > 0:
                 pred_str = ", ".join([f"{k}:{v}" for k, v in dict(class_preds).items()])
-                print(f"      True {true_label:8s} → {pred_str}")
+                print(f"      True {true_label:8s}  {pred_str}")
     print()
     
     # Winner announcement
@@ -320,15 +320,15 @@ def main():
     winner = max(accuracies, key=accuracies.get)
     
     print("=" * 70)
-    print(f"🏆 WINNER (Pre-trained Baseline): {winner} with {accuracies[winner]:.1f}% accuracy")
+    print(f" WINNER (Pre-trained Baseline): {winner} with {accuracies[winner]:.1f}% accuracy")
     print("=" * 70)
     print()
     
-    print(f"💾 Full results with true labels saved to: {output_file}")
+    print(f" Full results with true labels saved to: {output_file}")
     print()
     
     print("=" * 70)
-    print("📊 ANALYSIS & SUMMARY")
+    print(" ANALYSIS & SUMMARY")
     print("=" * 70)
     print()
     
@@ -363,52 +363,52 @@ def main():
     print(df.head()[available_cols].to_string(index=False))
     print()
     
-    print(f"💾 Full results saved to: {output_file}")
+    print(f" Full results saved to: {output_file}")
     print()
     
     # Model notes
     print("=" * 70)
-    print("📝 MODEL INTERPRETATIONS")
+    print(" MODEL INTERPRETATIONS")
     print("=" * 70)
     print()
-    print("1️⃣  FinBERT (ProsusAI/finbert):")
-    print("   ✅ Already fine-tuned on financial text")
-    print("   ✅ Has 3 labels: positive, negative, neutral")
-    print("   ✅ Best for financial sentiment OUT OF THE BOX")
-    print("   ✅ Should show most accurate predictions")
-    print("   📊 This is your baseline to beat!")
+    print("1£  FinBERT (ProsusAI/finbert):")
+    print("    Already fine-tuned on financial text")
+    print("    Has 3 labels: positive, negative, neutral")
+    print("    Best for financial sentiment OUT OF THE BOX")
+    print("    Should show most accurate predictions")
+    print("    This is your baseline to beat!")
     print()
-    print("2️⃣  DistilBERT (SST-2 model):")
-    print("   ⚠️  Fine-tuned on movie reviews (SST-2)")
-    print("   ⚠️  Only has 2 labels: POSITIVE, NEGATIVE")
-    print("   ⚠️  NO NEUTRAL LABEL (forces binary choice)")
-    print("   ⚠️  May not understand financial context")
-    print("   📊 After fine-tuning: will learn 3-class + finance")
+    print("2£  DistilBERT (SST-2 model):")
+    print("     Fine-tuned on movie reviews (SST-2)")
+    print("     Only has 2 labels: POSITIVE, NEGATIVE")
+    print("     NO NEUTRAL LABEL (forces binary choice)")
+    print("     May not understand financial context")
+    print("    After fine-tuning: will learn 3-class + finance")
     print()
-    print("3️⃣  ELECTRA (emotion model):")
-    print("   ⚠️  Trained on emotion detection (joy, sadness, anger, etc.)")
-    print("   ⚠️  NOT trained for sentiment analysis")
-    print("   ⚠️  Labels may not align with sentiment")
-    print("   📊 After fine-tuning: will learn financial sentiment")
+    print("3£  ELECTRA (emotion model):")
+    print("     Trained on emotion detection (joy, sadness, anger, etc.)")
+    print("     NOT trained for sentiment analysis")
+    print("     Labels may not align with sentiment")
+    print("    After fine-tuning: will learn financial sentiment")
     print()
     print("=" * 70)
-    print("🎯 KEY INSIGHTS")
+    print(" KEY INSIGHTS")
     print("=" * 70)
     print()
     print("BEFORE Fine-tuning (current results):")
-    print("   • FinBERT should be most accurate (already trained on finance)")
-    print("   • DistilBERT may be reasonable (general sentiment)")
-    print("   • ELECTRA will be off (emotions ≠ sentiment)")
+    print("   ¢ FinBERT should be most accurate (already trained on finance)")
+    print("   ¢ DistilBERT may be reasonable (general sentiment)")
+    print("   ¢ ELECTRA will be off (emotions  sentiment)")
     print()
     print("AFTER Fine-tuning on FinancialPhraseBank:")
-    print("   • All 3 models will have same 3 labels (neg, neu, pos)")
-    print("   • All will understand financial terminology")
-    print("   • We can compare which ARCHITECTURE learns best:")
+    print("   ¢ All 3 models will have same 3 labels (neg, neu, pos)")
+    print("   ¢ All will understand financial terminology")
+    print("   ¢ We can compare which ARCHITECTURE learns best:")
     print("     - FinBERT: Domain specialist, may improve slightly")
     print("     - DistilBERT: Smaller/faster, may lose 1-2% accuracy")
     print("     - ELECTRA: Often outperforms BERT, may be best")
     print()
-    print("💡 NEXT STEPS:")
+    print(" NEXT STEPS:")
     print("   1. Review pretrained_comparison.csv")
     print("   2. Note FinBERT's accuracy (your baseline)")
     print("   3. Train all 3 models on FinancialPhraseBank")
@@ -438,7 +438,7 @@ def main():
             f.write(classification_report(y_true, y_pred, digits=3, zero_division=0))
             f.write(f"Accuracy: {accuracy_score(y_true, y_pred):.3f}\n\n")
         # Winner
-        f.write(f"🏆 WINNER: {winner} with {accuracies[winner]:.1f}% accuracy\n\n")
+        f.write(f" WINNER: {winner} with {accuracies[winner]:.1f}% accuracy\n\n")
         # Per-class Accuracy
         f.write("="*80 + "\n")
         f.write("PER-CLASS ACCURACY BREAKDOWN\n")
@@ -464,7 +464,7 @@ def main():
                 class_preds = df[df['true_label'] == true_label][pred_col].value_counts()
                 if len(class_preds) > 0:
                     pred_str = ", ".join([f"{k}:{v}" for k, v in dict(class_preds).items()])
-                    f.write(f"   True {true_label:8s} → {pred_str}\n")
+                    f.write(f"   True {true_label:8s}  {pred_str}\n")
             f.write("\n")
         
         # Model Characteristics
@@ -496,23 +496,23 @@ def main():
         f.write("KEY INSIGHTS & EXPECTATIONS\n")
         f.write("="*80 + "\n\n")
         f.write("BEFORE Fine-tuning (Current Results):\n")
-        f.write("   • FinBERT should dominate (already financial sentiment trained)\n")
-        f.write("   • DistilBERT may have reasonable accuracy on positive/negative\n")
-        f.write("   • DistilBERT will struggle with neutral (no neutral label)\n")
-        f.write("   • ELECTRA will be inconsistent (emotion ≠ sentiment)\n\n")
+        f.write("   ¢ FinBERT should dominate (already financial sentiment trained)\n")
+        f.write("   ¢ DistilBERT may have reasonable accuracy on positive/negative\n")
+        f.write("   ¢ DistilBERT will struggle with neutral (no neutral label)\n")
+        f.write("   ¢ ELECTRA will be inconsistent (emotion  sentiment)\n\n")
         
         f.write("AFTER Fine-tuning on FinancialPhraseBank:\n")
-        f.write("   • All models will learn the same 3 labels\n")
-        f.write("   • All will understand financial terminology\n")
-        f.write("   • Architecture differences will determine performance:\n")
+        f.write("   ¢ All models will learn the same 3 labels\n")
+        f.write("   ¢ All will understand financial terminology\n")
+        f.write("   ¢ Architecture differences will determine performance:\n")
         f.write("     - FinBERT: May improve 3-5% (already optimized)\n")
         f.write("     - DistilBERT: Should improve 10-15% (learns neutral + finance)\n")
         f.write("     - ELECTRA: Should improve 20-30% (learns task from scratch)\n\n")
         
         f.write("Expected Post-Training Accuracy:\n")
-        f.write("   • FinBERT: 80-83% (current baseline + refinement)\n")
-        f.write("   • DistilBERT: 79-81% (trade-off: speed vs accuracy)\n")
-        f.write("   • ELECTRA: 82-84% (best architecture for this task)\n\n")
+        f.write("   ¢ FinBERT: 80-83% (current baseline + refinement)\n")
+        f.write("   ¢ DistilBERT: 79-81% (trade-off: speed vs accuracy)\n")
+        f.write("   ¢ ELECTRA: 82-84% (best architecture for this task)\n\n")
         
         # Sample Predictions
         f.write("="*80 + "\n")
@@ -522,9 +522,9 @@ def main():
             sentence = row['sentence'][:100] + "..." if len(row['sentence']) > 100 else row['sentence']
             f.write(f"Sentence {i+1}: {sentence}\n")
             f.write(f"   True Label:      {row['true_label']}\n")
-            f.write(f"   FinBERT:         {row['finbert_prediction']} {'✓' if row['finbert_correct'] else '✗'}\n")
-            f.write(f"   DistilBERT:      {row['distilbert_prediction']} {'✓' if row['distilbert_correct'] else '✗'}\n")
-            f.write(f"   ELECTRA:         {row['electra_prediction']} {'✓' if row['electra_correct'] else '✗'}\n\n")
+            f.write(f"   FinBERT:         {row['finbert_prediction']} {'' if row['finbert_correct'] else ''}\n")
+            f.write(f"   DistilBERT:      {row['distilbert_prediction']} {'' if row['distilbert_correct'] else ''}\n")
+            f.write(f"   ELECTRA:         {row['electra_prediction']} {'' if row['electra_correct'] else ''}\n\n")
         
         # Next Steps
         f.write("="*80 + "\n")
@@ -542,10 +542,10 @@ def main():
         f.write("END OF REPORT\n")
         f.write("="*80 + "\n")
     
-    print(f"📄 Detailed analysis report saved to: {report_path}")
+    print(f" Detailed analysis report saved to: {report_path}")
     print()
     print("=" * 70)
-    print("✅ TESTING COMPLETE")
+    print(" TESTING COMPLETE")
     print("=" * 70)
     print()
 

@@ -38,5 +38,5 @@ def main():
         print(f"Ingested {count} articles.")
 
 
-if __name__ == "__main__":  # pragma: no cover
+if __name__ == "__main__": # pragma: no cover
     main()

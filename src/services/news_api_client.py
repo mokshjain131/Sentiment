@@ -8,14 +8,14 @@ from functools import lru_cache
 import os
 import yaml
 try:
-    from dotenv import load_dotenv  # type: ignore
-except Exception:  # pragma: no cover
-    load_dotenv = None  # type: ignore
+    from dotenv import load_dotenv # type: ignore
+except Exception: # pragma: no cover
+    load_dotenv = None # type: ignore
 
 # Load .env early (if python-dotenv installed). Safe no-op if not present.
 if load_dotenv is not None:
     # Allow project root .env discovery
-    load_dotenv()  # relies on current working directory when process started
+    load_dotenv() # relies on current working directory when process started
 
 
 @dataclass

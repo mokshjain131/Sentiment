@@ -6,6 +6,6 @@ DetectorFactory.seed = 42
 
 def detect_lang(text: str) -> str:
     try:
-        return detect(text)
+     return detect(text)
     except Exception:
-        return "unknown"
+     return "unknown"

@@ -27,7 +27,7 @@ from sklearn.utils.class_weight import compute_class_weight
 
 # Calculate inverse frequency weights
 class_counts = df['label'].value_counts().sort_index()
-print(f"\n📊 Class distribution:")
+print(f"\n Class distribution:")
 for label, count in class_counts.items():
     print(f"   {label}: {count} ({100*count/len(df):.1f}%)")
 
@@ -39,7 +39,7 @@ class_weights_sklearn = compute_class_weight(
 )
 
 class_weights = torch.tensor(class_weights_sklearn, dtype=torch.float32)
-print(f"\n⚖️ Class weights (to balance training):")
+print(f"\n Class weights (to balance training):")
 for label, weight in zip(LABELS, class_weights):
     print(f"   {label}: {weight:.3f}")
 
@@ -51,7 +51,7 @@ train_df, val_df = train_test_split(
     stratify=df['label']
 )
 
-print(f"\n📊 Split: Train={len(train_df)}, Validation={len(val_df)}")
+print(f"\n Split: Train={len(train_df)}, Validation={len(val_df)}")
 
 # Create PyTorch Dataset
 class SentimentDataset(Dataset):
@@ -85,7 +85,7 @@ class SentimentDataset(Dataset):
 # ============================================================
 # OPTION 3: Custom Model Config with Higher Dropout
 # ============================================================
-print("📦 Loading FinBERT with custom dropout settings...")
+print("¦ Loading FinBERT with custom dropout settings...")
 model_name = "ProsusAI/finbert"
 
 # Load config and modify dropout rates
@@ -162,7 +162,7 @@ training_args = TrainingArguments(
     # load_best_model_at_end already helps
 )
 
-print("\n🎯 Training Configuration:")
+print("\n Training Configuration:")
 print(f"   Epochs: {training_args.num_train_epochs}")
 print(f"   Learning rate: {training_args.learning_rate}")
 print(f"   Weight decay: {training_args.weight_decay}")
@@ -236,23 +236,23 @@ trainer = WeightedTrainer(
 )
 
 # Train!
-print("\n🚀 Starting training with anti-overfitting techniques...")
-print("⏱️ Expected time: 3-5 minutes on T4 GPU\n")
+print("\n Starting training with anti-overfitting techniques...")
+print("± Expected time: 3-5 minutes on T4 GPU\n")
 
 trainer.train()
 
-print("\n✅ Training complete!")
+print("\n Training complete!")
 
 # Show training history
 import pandas as pd
 history = pd.DataFrame(trainer.state.log_history)
-print("\n📊 Training History:")
+print("\n Training History:")
 print(history[['epoch', 'loss', 'eval_loss', 'eval_accuracy']].dropna())
 
 # ============================================================
 # SAVE MODEL with unique name
 # ============================================================
-print("\n💾 Saving model...")
+print("\n Saving model...")
 
 # Save to Google Drive
 from google.colab import drive
@@ -262,5 +262,5 @@ output_dir = "/content/drive/MyDrive/sentiment_models/finetuned_improved"
 model.save_pretrained(output_dir)
 tokenizer.save_pretrained(output_dir)
 
-print(f"✅ Model saved to: {output_dir}")
-print("\n📥 Local path for your project: models/finetuned_improved/")
+print(f" Model saved to: {output_dir}")
+print("\n¥ Local path for your project: models/finetuned_improved/")

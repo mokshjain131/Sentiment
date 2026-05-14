@@ -9,7 +9,7 @@ Features:
 - Best choice for maximizing accuracy
 
 Usage in Colab:
-1. Runtime → Change runtime type → T4 GPU
+1. Runtime  Change runtime type  T4 GPU
 2. Run this entire cell
 3. Model saves to Google Drive
 """
@@ -17,7 +17,7 @@ Usage in Colab:
 # ============================================================
 # INSTALL DEPENDENCIES
 # ============================================================
-!pip install transformers datasets torch pandas scikit-learn pyarrow sentencepiece accelerate -q
+# !pip install transformers datasets torch pandas scikit-learn pyarrow sentencepiece accelerate -q
 
 # ============================================================
 # IMPORTS
@@ -60,12 +60,12 @@ MAX_LEN = 128
 # ============================================================
 
 # Load FinancialPhraseBank (using 50% agreement split for cleaner data)
-print("📥 Loading FinancialPhraseBank dataset...")
+print("¥ Loading FinancialPhraseBank dataset...")
 dataset = load_dataset("financial_phrasebank", "sentences_50agree")
 
 # Convert to pandas for easier handling
 df = pd.DataFrame(dataset['train'])
-print(f"✅ Loaded {len(df)} sentences")
+print(f" Loaded {len(df)} sentences")
 
 # Map labels (0: negative, 1: neutral, 2: positive)
 # Note: FinancialPhraseBank labels are 0:negative, 1:neutral, 2:positive
@@ -87,7 +87,7 @@ print(f"Test samples: {len(test_texts)}")
 # TOKENIZATION
 # ============================================================
 
-print(f"⚙️ Loading Tokenizer: {MODEL_NAME}")
+print(f" Loading Tokenizer: {MODEL_NAME}")
 tokenizer = AutoTokenizer.from_pretrained(MODEL_NAME)
 
 def tokenize_data(texts, labels):
@@ -116,7 +116,7 @@ test_dataset = tokenize_data(test_texts, test_labels)
 # MODEL SETUP
 # ============================================================
 
-print(f"🏗️ Initializing Model: {MODEL_NAME}")
+print(f" Initializing Model: {MODEL_NAME}")
 model = AutoModelForSequenceClassification.from_pretrained(
     MODEL_NAME, 
     num_labels=3,
@@ -162,17 +162,17 @@ trainer = Trainer(
     callbacks=[EarlyStoppingCallback(early_stopping_patience=2)]
 )
 
-print("🚀 Starting Training...")
+print(" Starting Training...")
 start_time = time.time()
 trainer.train()
 end_time = time.time()
-print(f"✅ Training complete in {(end_time - start_time)/60:.2f} minutes")
+print(f" Training complete in {(end_time - start_time)/60:.2f} minutes")
 
 # ============================================================
 # EVALUATION
 # ============================================================
 
-print("\n📊 Evaluating on Test Set...")
+print("\n Evaluating on Test Set...")
 predictions = trainer.predict(test_dataset)
 preds = np.argmax(predictions.predictions, axis=-1)
 
@@ -184,7 +184,7 @@ print(classification_report(test_labels, preds, target_names=["negative", "neutr
 # ============================================================
 
 save_path = f"./drive/MyDrive/models/{MODEL_OUTPUT_NAME}"
-print(f"\n💾 Saving model to {save_path}...")
+print(f"\n Saving model to {save_path}...")
 # Create directory if running locally or ensure drive is mounted
 # trainer.save_model(save_path)
 # tokenizer.save_pretrained(save_path)
